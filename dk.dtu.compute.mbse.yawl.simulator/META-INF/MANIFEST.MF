@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: dk.dtu.compute.mbse.yawl.simulator
+Bundle-SymbolicName: dk.dtu.compute.mbse.yawl.simulator;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Require-Bundle: org.eclipse.emf.ecore,
+ org.pnml.tools.epnk.annotations;bundle-version="1.1.0",
+ org.pnml.tools.epnk.applications;bundle-version="1.1.2",
+ dk.dtu.compute.mbse.yawl;bundle-version="0.1.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.8.0",
+ org.pnml.tools.epnk.tutorials.app.simulator

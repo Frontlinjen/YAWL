@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="yawlannotations" nsURI="http://se.compute.dtu.dk/mbse/yawl"
+    nsPrefix="yawlanno">
+  <eClassifiers xsi:type="ecore:EClass" name="EnablebTransition" eSuperTypes="../../org.pnml.tools.epnk.annotations/model/NetAnnotations.ecore#//ObjectAnnotation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resolved" eType="#//EnablebTransition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outArcs" upperBound="-1"
+        eType="#//SelectArc" eOpposite="#//SelectArc/sourceTransition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inArcs" upperBound="-1"
+        eType="#//SelectArc" eOpposite="#//SelectArc/targetTransition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SelectArc" eSuperTypes="../../org.pnml.tools.epnk.annotations/model/NetAnnotations.ecore#//ObjectAnnotation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceTransition" eType="#//EnablebTransition"
+        eOpposite="#//EnablebTransition/outArcs"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetTransition" eType="#//EnablebTransition"
+        eOpposite="#//EnablebTransition/inArcs"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceMarking" eType="#//Marking"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Marking" eSuperTypes="../../org.pnml.tools.epnk.annotations/model/NetAnnotations.ecore#//ObjectAnnotation ../../org.pnml.tools.epnk.annotations/model/NetAnnotations.ecore#//TextualAnnotation"/>
+</ecore:EPackage>

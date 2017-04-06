@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+	<extension
+		id="dk.dtu.compute.mbse.yawl.pntd"
+		name="YAWL Nets"
+		point="org.pnml.tools.epnk.pntd">
+		<type
+			class="dk.dtu.compute.mbse.yawl.impl.YAWLNetImpl"
+			description="YAWL Nets" />
+	</extension>
+
+	<extension
+			point="org.eclipse.emf.validation.constraintProviders">
+		<constraintProvider
+				cache="true">
+			<package
+					namespaceUri="http://se.compute.dtu.dk/mbse/yawl">
+			</package>
+			<constraints categories="org.pnml.tools.epnk.validation">
+				<constraint
+						id="dk.dtu.compute.mbse.yawl.validation.correct-arc-connection"
+						lang="OCL"
+						mode="Live"
+						name="Arc connection constraint for YAWL nets"
+						severity="ERROR"
+						statusCode="401">
+						<message>
+							The arc {0} with this arc type is not allowed between these elements.
+						</message>
+						<description>
+							Arcs must be between a place and a transition, a transition and a place, or 
+							between two transitions. Only arcs between a place and a transition may have
+							a type!
+						</description>
+						<target
+								class="Arc:http://se.compute.dtu.dk/mbse/yawl">
+							<event
+									name="Set">
+								<feature 
+									name="source">
+								</feature>
+								<feature 
+									name="target">
+								</feature>
+								<feature 
+									name="type">
+								</feature>
+							</event>
+						</target>
+						<![CDATA[
+							( self.source.oclIsKindOf(pnmlcoremodel::PlaceNode) and
+ 							  self.target.oclIsKindOf(pnmlcoremodel::TransitionNode) )
+							  or
+							( self.source.oclIsKindOf(pnmlcoremodel::TransitionNode) and
+ 							  self.target.oclIsKindOf(pnmlcoremodel::PlaceNode) and
+  							  self.type->size() = 0 )
+						]]>
+				</constraint>
+					
+				<constraint
+							lang="Java"
+							class="dk.dtu.compute.mbse.yawl.constraints.OneStartAndEnd"
+							severity="ERROR"
+							mode="Batch"
+							name="One start and end place"
+							id="dk.dtu.compute.mbse.yawl.validation.one-start-and-end-place"
+							statusCode="402">
+						<target class="YAWLNet:http://se.compute.dtu.dk/mbse/yawl"/>
+						<description>
+							A YAWL net must have one start and end place.
+						</description>
+						<message>
+							A YAWL Net {0} does not have exactly one start and one end place.
+						</message>
+				</constraint>
+				<constraint
+							lang="Java"
+							class="dk.dtu.compute.mbse.yawl.constraints.EmptyStartPreset"
+							severity="ERROR"
+							mode="Batch"
+							name="Start place has empty preset"
+							id="dk.dtu.compute.mbse.yawl.validation.start-condition-has-empty-preset"
+							statusCode="403">
+						<target class="Condition:http://se.compute.dtu.dk/mbse/yawl"/>
+						<description>
+							A start condition must have empty preset.
+						</description>
+						<message>
+							The start condition {0} does not have empty preset.
+						</message>
+				</constraint>
+				<constraint
+							lang="Java"
+							class="dk.dtu.compute.mbse.yawl.constraints.EmptyEndPostset"
+							severity="ERROR"
+							mode="Batch"
+							name="End place has empty postset"
+							id="dk.dtu.compute.mbse.yawl.validation.end-condition-has-empty-postset"
+							statusCode="404">
+						<target class="Condition:http://se.compute.dtu.dk/mbse/yawl"/>
+						<description>
+							An end condition must have empty postset.
+						</description>
+						<message>
+							The end condition {0} does not have empty postset.
+						</message>
+				</constraint>
+				<constraint
+							lang="Java"
+							class="dk.dtu.compute.mbse.yawl.constraints.DuplicateArcs"
+							severity="ERROR"
+							mode="Batch"
+							name="No duplicate arcs"
+							id="dk.dtu.compute.mbse.yawl.validation.no-duplicate-arcs"
+							statusCode="405">
+						<target class="Arc:http://se.compute.dtu.dk/mbse/yawl"/>
+						<description>
+							Arcs of the same type are not allowed between the same nodes.
+						</description>
+						<message>
+							The arc {0} is a duplicate arc.
+						</message>
+				</constraint>
+			</constraints>
+		</constraintProvider>
+	</extension>
+							
+							
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated yawl -->
+      <package
+            uri="http://se.compute.dtu.dk/mbse/yawl"
+            class="dk.dtu.compute.mbse.yawl.YawlPackage"
+            genModel="model/yawl.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated yawl -->
+      <parser
+            type="yawl"
+            class="dk.dtu.compute.mbse.yawl.util.YawlResourceFactoryImpl"/>
+   </extension>
+</plugin>
