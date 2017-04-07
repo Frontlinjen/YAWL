@@ -13,6 +13,7 @@ import org.pnml.tools.epnk.pnmlcoremodel.Transition;
 
 import org.pnml.tools.epnk.tutorials.app.graphics.figures.TechnicalNetTypeArcFigure;
 import org.pnml.tools.epnk.tutorials.app.graphics.figures.TechnicalNetTypeTransitionFigure;
+import org.pnml.tools.epnk.tutorials.app.technical.TechnicalPackage;
 
 /**
  * The graphical extension the the Technical Net extension. This is
