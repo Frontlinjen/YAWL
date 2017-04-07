@@ -11,8 +11,6 @@ import org.pnml.tools.epnk.gmf.extensions.graphics.IUpdateableFigure;
 import org.pnml.tools.epnk.pnmlcoremodel.Arc;
 import org.pnml.tools.epnk.pnmlcoremodel.Transition;
 
-import org.pnml.tools.epnk.tutorials.app.technical.TechnicalPackage;
-
 import org.pnml.tools.epnk.tutorials.app.graphics.figures.TechnicalNetTypeArcFigure;
 import org.pnml.tools.epnk.tutorials.app.graphics.figures.TechnicalNetTypeTransitionFigure;
 
