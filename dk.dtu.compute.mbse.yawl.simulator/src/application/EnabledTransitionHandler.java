@@ -68,13 +68,11 @@ public class EnabledTransitionHandler implements IActionHandler{
 
 	@Override
 	public boolean mousePressed(MouseEvent arg0, ObjectAnnotation annotation) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseReleased(MouseEvent arg0, ObjectAnnotation annotation) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

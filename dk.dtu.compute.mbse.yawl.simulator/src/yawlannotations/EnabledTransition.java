@@ -95,6 +95,6 @@ public interface EnabledTransition extends ObjectAnnotation {
 	 * @model kind="operation"
 	 * @generated
 	 */
-	Transition getAction();
+	Transition getTransition();
 
 } // EnabledTransition
