@@ -23,6 +23,11 @@ public class YAWLFunctions {
 		return AType.NORMAL;
 	}
 	
+	public static boolean isResetArc(org.pnml.tools.epnk.pnmlcoremodel.Arc arc){
+		return getType(arc) == AType.RESET;
+	}
+	
+	
 	public static PType getType(org.pnml.tools.epnk.pnmlcoremodel.Place pla){
 		if(pla instanceof Place){
 			pla = (Place) pla;
@@ -55,5 +60,7 @@ public class YAWLFunctions {
 		}
 		return TType.OR;
 	}
+	
+	
 	
 }
