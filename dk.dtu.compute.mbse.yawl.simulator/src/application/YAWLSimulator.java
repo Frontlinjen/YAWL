@@ -56,8 +56,8 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 		NetAnnotation anno = NetannotationsFactory.eINSTANCE.createNetAnnotation();
 		anno.setNet(getPetrinet());
 		Map<Object,Marking> p2mAnno = new HashMap<Object,Marking>();
-		for(Place place : nm.getSupport()) {
-			int value = nm.getMarking(place);
+		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : nm.GetSupport()) {
+			int value = nm.GetMarking(place);
 			if(value > 0){
 				Marking markAnno = YawlannotationsFactory.eINSTANCE.createMarking();
 				markAnno.setValue(value);
@@ -205,7 +205,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 						if(source instanceof PlaceNode){
 							source = fa.resolve((PlaceNode) source);
 							if(source instanceof Place) {
-								if(nm.getMarking((Place) source) > 0){
+								if(nm.GetMarking((Place) source) > 0){
 									return true;
 								}
 							}
