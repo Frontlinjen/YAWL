@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.pnml.tools.epnk.pnmlcoremodel.Place;
 
-import dk.dtu.compute.mbse.tutorial.yawl.simulator.marking.Condition;
-
 public class NetMarking {
 	
 	private Map<Place, Integer> marking;
