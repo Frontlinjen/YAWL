@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -11,17 +12,20 @@ import org.pnml.tools.epnk.annotations.netannotations.ObjectAnnotation;
 import org.pnml.tools.epnk.applications.ui.IActionHandler;
 import org.pnml.tools.epnk.helpers.FlatAccess;
 import org.pnml.tools.epnk.helpers.NetFunctions;
+import org.pnml.tools.epnk.pnmlcoremodel.PlaceNode;
 import org.pnml.tools.epnk.pnmlcoremodel.TransitionNode;
 
 import dk.dtu.compute.mbse.yawl.Arc;
+import dk.dtu.compute.mbse.yawl.Place;
 import dk.dtu.compute.mbse.yawl.Transition;
 import dk.dtu.compute.mbse.yawl.functions.YAWLFunctions;
+import marking.NetMarking;
 import yawlannotations.EnabledTransition;
 import yawlannotations.SelectedArc;
 import yawlannotations.YawlannotationsFactory;
 import yawlannotations.YawlannotationsPackage;
 
-public class EnabledTransitionHandler implements IActionHandler{
+public class EnabledTransitionHandler implements IActionHandler{ //SE TUTORIAL 8C
 
 	private YAWLSimulator app;
 	
@@ -33,35 +37,25 @@ public class EnabledTransitionHandler implements IActionHandler{
 	@Override
 	public boolean mouseDoubleClicked(MouseEvent arg0, ObjectAnnotation annotation) {
 		NetAnnotations nas = app.getNetAnnotations();
-		NetAnnotation na = nas.getCurrent();
-		if(na.getObjectAnnotations().contains(nas)){
+		NetAnnotation current = nas.getCurrent();
+		FlatAccess flatNet = app.getFlatAccess();
+		
+		if(current.getObjectAnnotations().contains(annotation)){
 			Object object = annotation.getObject();
-			if(annotation instanceof TransitionNode){
-				//NetFunctions.resolve((TransitionNode)annotation);
-				FlatAccess flatAccess = app.getFlatAccess();
-				object = flatAccess.resolve((TransitionNode)annotation);
+			if(object instanceof Transition){
+				object = flatNet.resolve((Transition) object);
 			}
-			if(object instanceof Transition && object instanceof EnabledTransition){
-				EnabledTransition enabledTransition = (EnabledTransition) annotation;
-				
-				//TODO verify: Assuming that EnabledTransitions are always enabled we do not need a if statement
-				Collection<Arc> inArcs = new HashSet<Arc>();
-				for(SelectedArc a : enabledTransition.getInArcs()){
-					Object o = a.getObject();
-					if (o instanceof Arc && !a.isSelected()) {
-						inArcs.add((Arc) o);
-					}
-				}
-				Collection<Arc> outArcs = new HashSet<Arc>();
-				for(SelectedArc a : enabledTransition.getOutArcs()){
-					Object o = a.getObject();
-					if (o instanceof Arc && !a.isSelected()) {
-						outArcs.add((Arc) o);
-					}
-				}
-				//TODO Check hvilken type af arc der er snakke om, hvis der er mulighed for at få flere inArcs så vælg en af dem og glem resten
-				app.fireTransition(app.getFlatAccess(), app.computeMarking(), selectedInArc, enabledTransition, outArcs);
-				//return app.fireTransition(app.getFlatAccess(), app.computeMarking(), inArcs, enabledTransition, outArcs);
+			Transition transition = (Transition) object;
+			NetMarking netMarking = app.computeMarking();
+			if(app.enabled(flatNet, netMarking, transition)){
+				//YAWLSimulator causes this error
+				Netmarking newNetMarking = app.fireTransition(flatNet, netMarking, getSelectedInArcs((EnabledTransition) annotation), transition, getSelectedOutArcs((EnabledTransition) annotation));
+				NetAnnotation netAnnotation = app.computeAnnotation(newNetMarking);
+				netAnnotation.setNet(app.getPetrinet());
+				app.deleteNetAnnotationAfterCurrent();
+				app.addNetAnnotationAsCurrent(netAnnotation);
+				app.update();
+				return true;
 			}
 		}
 		return false;
@@ -76,5 +70,31 @@ public class EnabledTransitionHandler implements IActionHandler{
 	public boolean mouseReleased(MouseEvent arg0, ObjectAnnotation annotation) {
 		return false;
 	}
-
+	
+	private Arc getSelectedInArcs(EnabledTransition enabledTransition){
+		EnabledTransition resolved = enabledTransition.getResolved();
+		if(resolved == null){
+			resolved = enabledTransition;
+		}
+		for(SelectedArc selectedArc : resolved.getInArcs()){
+			if(selectedArc.isSelected()){
+				return (Arc) selectedArc.getObject();
+			}
+		}
+		return null;
+	}
+	
+	private Collection<Arc> getSelectedOutArcs(EnabledTransition enabledTransition){
+		EnabledTransition resolved = enabledTransition.getResolved();
+		Collection<Arc> arcs = new HashSet<Arc>();
+		if(resolved == null){
+			resolved = enabledTransition;
+		}
+		for(SelectedArc selectedArc : resolved.getOutArcs()){
+			if(selectedArc.isSelected()){
+				arcs.add((Arc)selectedArc);
+			}
+		}
+		return arcs;
+	}
 }
