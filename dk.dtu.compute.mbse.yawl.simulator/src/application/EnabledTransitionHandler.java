@@ -49,7 +49,7 @@ public class EnabledTransitionHandler implements IActionHandler{ //SE TUTORIAL 8
 			NetMarking netMarking = app.computeMarking();
 			if(app.enabled(flatNet, netMarking, transition)){
 				//YAWLSimulator causes this error
-				Netmarking newNetMarking = app.fireTransition(flatNet, netMarking, getSelectedInArcs((EnabledTransition) annotation), transition, getSelectedOutArcs((EnabledTransition) annotation));
+				NetMarking newNetMarking = app.fireTransition(flatNet, netMarking, getSelectedInArcs((EnabledTransition) annotation), transition, getSelectedOutArcs((EnabledTransition) annotation));
 				NetAnnotation netAnnotation = app.computeAnnotation(newNetMarking);
 				netAnnotation.setNet(app.getPetrinet());
 				app.deleteNetAnnotationAfterCurrent();
