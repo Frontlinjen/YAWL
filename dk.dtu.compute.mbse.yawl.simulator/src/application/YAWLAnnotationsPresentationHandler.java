@@ -3,9 +3,9 @@ package application;
 import javax.swing.text.StyleConstants.ColorConstants;
 
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.pnml.tools.epnk.annotations.netannotations.ObjectAnnotation;
 import org.pnml.tools.epnk.applications.ui.IPresentationHandler;
 import org.pnml.tools.epnk.applications.ui.figures.PolylineOverlay;
@@ -23,7 +23,7 @@ public class YAWLAnnotationsPresentationHandler implements IPresentationHandler{
 		if(annotation instanceof EnabledTransition){
 			if(editPart instanceof GraphicalEditPart){
 				GraphicalEditPart graphicalEditPart = (GraphicalEditPart) editPart;
-				java.lang.Object modelObject = graphicalEditPart.resolveSementicElement();
+				java.lang.Object modelObject = graphicalEditPart.resolveSemanticElement();
 				if(modelObject instanceof TransitionNode){
 					RectangleOverlay overlay = new RectangleOverlay(graphicalEditPart);
 					overlay.setForegroundColor(org.eclipse.draw2d.ColorConstants.blue);
