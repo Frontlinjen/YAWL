@@ -12,7 +12,7 @@ import dk.dtu.compute.mbse.yawl.TransitionType;
 
 public class YAWLFunctions {
 
-	public static AType getType(org.pnml.tools.epnk.pnmlcoremodel.Arc arc){
+	public static AType getType(Arc arc){
 		if(arc instanceof Arc){
 			arc = (Arc) arc;
 			ArcType a = (ArcType) arc;
@@ -23,12 +23,12 @@ public class YAWLFunctions {
 		return AType.NORMAL;
 	}
 	
-	public static boolean isResetArc(org.pnml.tools.epnk.pnmlcoremodel.Arc arc){
+	public static boolean isResetArc(Arc arc){
 		return getType(arc) == AType.RESET;
 	}
 	
 	
-	public static PType getType(org.pnml.tools.epnk.pnmlcoremodel.Place pla){
+	public static PType getType(Place pla){
 		if(pla instanceof Place){
 			pla = (Place) pla;
 			PlaceType p = (PlaceType) pla;
@@ -39,7 +39,7 @@ public class YAWLFunctions {
 		return PType.NORMAL;
 	}
 	
-	public static TType getJoinType(org.pnml.tools.epnk.pnmlcoremodel.Transition tra){
+	public static TType getJoinType(Transition tra){
 		if(tra instanceof Transition){
 			tra = (Transition) tra;
 			TransitionType t = (TransitionType) tra;
@@ -50,7 +50,7 @@ public class YAWLFunctions {
 		return TType.OR;
 	}
 	
-	public static TType getSplitType(org.pnml.tools.epnk.pnmlcoremodel.Transition tra){
+	public static TType getSplitType(Transition tra){
 		if(tra instanceof Transition){
 			tra = (Transition) tra;
 			TransitionType t = (TransitionType) tra;
