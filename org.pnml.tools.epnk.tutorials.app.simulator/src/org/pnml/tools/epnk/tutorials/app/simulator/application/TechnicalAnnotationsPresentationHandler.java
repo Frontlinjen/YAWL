@@ -10,11 +10,12 @@ import org.pnml.tools.epnk.annotations.netannotations.ObjectAnnotation;
 import org.pnml.tools.epnk.applications.ui.IPresentationHandler;
 import org.pnml.tools.epnk.applications.ui.figures.PolylineOverlay;
 import org.pnml.tools.epnk.applications.ui.figures.RectangleOverlay;
+import org.pnml.tools.epnk.pnmlcoremodel.Arc;
 import org.pnml.tools.epnk.pnmlcoremodel.TransitionNode;
 
 import org.pnml.tools.epnk.tutorials.app.simulator.techsimannotations.EnabledTransition;
 import org.pnml.tools.epnk.tutorials.app.simulator.techsimannotations.InvolvedArc;
-import org.pnml.tools.epnk.tutorials.app.technical.Arc;
+
 
 /**
  * Presentation handler for all annotations which have a specific appearance

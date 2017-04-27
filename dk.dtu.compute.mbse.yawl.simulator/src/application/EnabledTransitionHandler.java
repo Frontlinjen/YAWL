@@ -59,8 +59,9 @@ public class EnabledTransitionHandler implements IActionHandler{
 						outArcs.add((Arc) o);
 					}
 				}
-				//TODO NetMarking?
-				return app.fireTransition(object, n1, inArcs, enabledTransition, outArcs);
+				//TODO Check hvilken type af arc der er snakke om, hvis der er mulighed for at få flere inArcs så vælg en af dem og glem resten
+				app.fireTransition(app.getFlatAccess(), app.computeMarking(), selectedInArc, enabledTransition, outArcs);
+				//return app.fireTransition(app.getFlatAccess(), app.computeMarking(), inArcs, enabledTransition, outArcs);
 			}
 		}
 		return false;

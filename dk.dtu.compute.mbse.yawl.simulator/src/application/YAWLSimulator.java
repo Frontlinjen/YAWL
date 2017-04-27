@@ -8,12 +8,14 @@ import java.util.Set;
 
 import org.pnml.tools.epnk.annotations.netannotations.NetAnnotation;
 import org.pnml.tools.epnk.annotations.netannotations.NetannotationsFactory;
+import org.pnml.tools.epnk.annotations.netannotations.ObjectAnnotation;
 import org.pnml.tools.epnk.applications.ApplicationWithUIManager;
 import org.pnml.tools.epnk.applications.ui.ApplicationUIManager;
 import org.pnml.tools.epnk.helpers.FlatAccess;
 import org.pnml.tools.epnk.pnmlcoremodel.PetriNet;
 
 import dk.dtu.compute.mbse.yawl.Arc;
+import dk.dtu.compute.mbse.yawl.PType;
 import dk.dtu.compute.mbse.yawl.Place;
 import dk.dtu.compute.mbse.yawl.TType;
 import dk.dtu.compute.mbse.yawl.Transition;
@@ -41,14 +43,11 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	}
 	
 	public void initializeContents(){
-		//Creates the initial annotations of the net on which the application is started.
-		NetMarking mark = new NetMarking();
-		//TODO Place skal laves om til vores egen
-		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : getFlatAccess().getPlaces()){
-			if(place instanceof Place){
-				int num = mark.GetMarking(place);
-			}
-		}
+		NetMarking init = computeInitialMarking();
+		NetAnnotation initAnnon = computeAnnotation(init);
+		initAnnon.setNet(this.getPetrinet());
+		this.getNetAnnotations().getNetAnnotations().add(initAnnon);
+		this.getNetAnnotations().setCurrent(initAnnon);
 	}
 	public NetAnnotation computeAnnotation(NetMarking nm){
 		FlatAccess flatAccess = getFlatAccess();
@@ -143,13 +142,32 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	}
 	
 	public NetMarking computeInitialMarking(){
-		//TODO
-		return null;
+		NetMarking mark = new NetMarking();
+		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : getFlatAccess().getPlaces())
+		{
+			if(place instanceof Place && YAWLFunctions.getType(place) == PType.START)
+			{
+				mark.SetMarking(place, 1);
+			}
+		}
+		return mark;
 	}
 	
 	public NetMarking computeMarking(){
-		//TODO
-		return null;
+		NetMarking mark = new NetMarking();
+		for(ObjectAnnotation annon : this.getNetAnnotations().getObjectAnnotations()){
+			if(annon instanceof Marking)
+			{
+				Marking markAnnon = (Marking) annon;
+				Object object = markAnnon.getObject();
+				int value = markAnnon.getValue();
+				if(object instanceof Place && value > 0){
+					Place place = (Place) object;
+					mark.SetMarking(place, value);
+				}
+			}
+		}
+		return mark;
 	}
 	
 	public boolean enabled(FlatAccess fa, NetMarking nm, Transition t){
