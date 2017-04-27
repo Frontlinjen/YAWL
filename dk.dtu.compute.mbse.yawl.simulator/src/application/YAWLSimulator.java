@@ -11,13 +11,12 @@ import org.pnml.tools.epnk.annotations.netannotations.NetannotationsFactory;
 import org.pnml.tools.epnk.applications.ApplicationWithUIManager;
 import org.pnml.tools.epnk.applications.ui.ApplicationUIManager;
 import org.pnml.tools.epnk.helpers.FlatAccess;
-import org.pnml.tools.epnk.pnmlcoremodel.Arc;
 import org.pnml.tools.epnk.pnmlcoremodel.PetriNet;
-import org.pnml.tools.epnk.pnmlcoremodel.PlaceNode;
-import org.pnml.tools.epnk.pnmlcoremodel.Transition;
 
+import dk.dtu.compute.mbse.yawl.Arc;
 import dk.dtu.compute.mbse.yawl.Place;
 import dk.dtu.compute.mbse.yawl.TType;
+import dk.dtu.compute.mbse.yawl.Transition;
 import dk.dtu.compute.mbse.yawl.functions.YAWLFunctions;
 import marking.NetMarking;
 import yawlannotations.EnabledTransition;
@@ -44,20 +43,21 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	public void initializeContents(){
 		//Creates the initial annotations of the net on which the application is started.
 		NetMarking mark = new NetMarking();
-		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : this.getFlatAccess().getPlaces()){
+		//TODO Place skal laves om til vores egen
+		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : getFlatAccess().getPlaces()){
 			if(place instanceof Place){
-				int num = YAWLFunctions.getMarking(place);
+				int num = mark.GetMarking(place);
 			}
 		}
 	}
-	
 	public NetAnnotation computeAnnotation(NetMarking nm){
 		FlatAccess flatAccess = getFlatAccess();
 		NetAnnotation anno = NetannotationsFactory.eINSTANCE.createNetAnnotation();
 		anno.setNet(getPetrinet());
 		Map<Object,Marking> p2mAnno = new HashMap<Object,Marking>();
-		for(Place place : nm.getSupport()) {
-			int value = nm.getMarking(place);
+		//TODO Place skal laves om til vores egen
+		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : nm.GetSupport()) {
+			int value = nm.GetMarking(place);
 			if(value > 0){
 				Marking markAnno = YawlannotationsFactory.eINSTANCE.createMarking();
 				markAnno.setValue(value);
@@ -71,8 +71,8 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 		}
 		
 		Set<Transition> enabled = new HashSet<Transition>();
-		
-		for(Transition t : flatAccess.getTransitions()){
+		//TODO Transition skal laves om til vores egen
+		for(org.pnml.tools.epnk.pnmlcoremodel.Transition t : flatAccess.getTransitions()){
 			if(t instanceof Transition){
 				if(enabled(flatAccess, nm, (Transition) t)){
 					enabled.add((Transition) t);
@@ -154,16 +154,16 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	
 	public boolean enabled(FlatAccess fa, NetMarking nm, Transition t){
 		TType joinType = YAWLFunctions.getJoinType(t);
-		if(joinType.equals(TType.AND)||joinType.equals(TType.SINGLE)){
+		if(joinType.equals(TType.AND)||joinType.equals(TType.OR)){
 			for(Object in : fa.getIn(t)){
 				if(in instanceof Arc) {
 					Arc arc = (Arc) in;
 					if (!YAWLFunctions.isResetArc(arc)){
 						Object source = arc.getSource();
-						if (source instanceof PlaceNode){
-							source = fa.resolve((PlaceNode) source);
+						if (source instanceof Place){
+							source = fa.resolve((Place) source);
 							if(source instanceof Place){
-								if(nm.getMarking((Place) source) < 1){
+								if(nm.GetMarking((Place) source) < 1){
 									return false;
 								}
 							} else {
@@ -183,10 +183,10 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					Arc arc = (Arc) in;
 					if(!YAWLFunctions.isResetArc(arc)) {
 						Object source = arc.getSource();
-						if(source instanceof PlaceNode){
-							source = fa.resolve((PlaceNode) source);
+						if(source instanceof Place){
+							source = fa.resolve((Place) source);
 							if(source instanceof Place) {
-								if(nm.getMarking((Place) source) > 0){
+								if(nm.GetMarking((Place) source) > 0){
 									return true;
 								}
 							}
