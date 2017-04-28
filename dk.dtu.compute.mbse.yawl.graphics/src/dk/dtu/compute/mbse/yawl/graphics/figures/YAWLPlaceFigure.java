@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Display;
 import org.pnml.tools.epnk.gmf.extensions.graphics.figures.PlaceFigure;
 import org.pnml.tools.epnk.pnmlcoremodel.Place;
 
+import dk.dtu.compute.mbse.yawl.Arc;
 import dk.dtu.compute.mbse.yawl.PType;
 import dk.dtu.compute.mbse.yawl.functions.YAWLFunctions;
 
@@ -26,7 +27,7 @@ public class YAWLPlaceFigure extends PlaceFigure {
 	
 	public YAWLPlaceFigure(Place place) {
 		super(place);
-		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place)place);
+		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place) place);
 	}
 
 	/**
@@ -35,9 +36,8 @@ public class YAWLPlaceFigure extends PlaceFigure {
 	 */
 	@Override
 	public void update() {
-		PType oldtype = type;
-		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place)place);
-		
+		PType oldtype = type;s
+		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place) place);
 		if (oldtype != type) {
 			// only call the repaint() method, when there was a change that has
 			// an effect to the graphical appearance of the transition

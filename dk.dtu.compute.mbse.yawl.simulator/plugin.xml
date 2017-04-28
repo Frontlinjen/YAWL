@@ -13,5 +13,13 @@
             class="yawlannotations.YawlannotationsPackage"
             genModel="model/yawlannotations.genmodel"/>
    </extension>
-
+	<extension
+         id="dk.dtu.compute.mbse.yawl.simulator"
+         name="YAWL Simulator"
+         point="org.pnml.tools.epnk.applications.applicationfactory">
+      <applicationfactory
+            class="dk.dtu.compute.mbse.yawl.simulator.application.YAWLSimulatorFactory"
+            description="A simple YAWL simulator for tutorial 8 of the MBSE course">
+      </applicationfactory>
+   </extension>
 </plugin>

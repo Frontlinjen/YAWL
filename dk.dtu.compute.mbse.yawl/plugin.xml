@@ -79,7 +79,7 @@
 							A YAWL Net {0} does not have exactly one start and one end place.
 						</message>
 				</constraint>
-				<constraint
+				<!--constraint
 							lang="Java"
 							class="dk.dtu.compute.mbse.yawl.constraints.EmptyStartPreset"
 							severity="ERROR"
@@ -110,7 +110,7 @@
 						<message>
 							The end condition {0} does not have empty postset.
 						</message>
-				</constraint>
+				</constraint-->
 				<constraint
 							lang="Java"
 							class="dk.dtu.compute.mbse.yawl.constraints.DuplicateArcs"
