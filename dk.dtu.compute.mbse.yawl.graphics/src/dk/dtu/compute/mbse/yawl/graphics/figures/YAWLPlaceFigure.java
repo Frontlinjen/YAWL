@@ -36,7 +36,7 @@ public class YAWLPlaceFigure extends PlaceFigure {
 	 */
 	@Override
 	public void update() {
-		PType oldtype = type;s
+		PType oldtype = type;
 		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place) place);
 		if (oldtype != type) {
 			// only call the repaint() method, when there was a change that has
