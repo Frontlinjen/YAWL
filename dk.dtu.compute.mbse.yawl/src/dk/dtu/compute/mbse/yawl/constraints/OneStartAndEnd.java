@@ -35,7 +35,7 @@ public class OneStartAndEnd extends AbstractModelConstraint{
 					EObject content = iterator.next();
 					if(content instanceof Place) {
 						Place place = (Place) content;
-						PType type = YAWLFunctions.getType(place);
+						PType type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place) place);
 						if(type.equals(PType.START)) {
 							startCount++;
 							if(startCount>1){
