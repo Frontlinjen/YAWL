@@ -7,7 +7,7 @@
          name="YAWL Graphics"
          point="org.pnml.tools.epnk.diagram.graphics">
       <graphicsextension
-            class="dk.dtu.compute.mbse.tutorial.yawl.graphics.factory.YAWLGraphics"
+            class="dk.dtu.compute.mbse.yawl.graphics.factory.YAWLGraphics"
             description="Dedicated graphics for Technical Net Type">
       </graphicsextension>
    </extension>

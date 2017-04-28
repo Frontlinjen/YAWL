@@ -1,4 +1,4 @@
-package dk.dtu.compute.mbse.tutorial.yawl.graphics.figures;
+package dk.dtu.compute.mbse.yawl.graphics.figures;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -26,7 +26,7 @@ public class YAWLPlaceFigure extends PlaceFigure {
 	
 	public YAWLPlaceFigure(Place place) {
 		super(place);
-		type = YAWLFunctions.getType(place);
+		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place)place);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class YAWLPlaceFigure extends PlaceFigure {
 	@Override
 	public void update() {
 		PType oldtype = type;
-		type = YAWLFunctions.getType(place);
+		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place)place);
 		
 		if (oldtype != type) {
 			// only call the repaint() method, when there was a change that has

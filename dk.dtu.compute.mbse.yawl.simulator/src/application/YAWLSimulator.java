@@ -82,7 +82,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					
 					//TODO also annotate reference transitions referring to this transition
 					
-					if(YAWLFunctions.getJoinType(t).equals(TType.XOR)){
+					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.XOR)){
 						boolean first = true;
 						for(Object in : flatAccess.getIn(t)){
 							if(in instanceof Arc){
@@ -106,7 +106,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 						}
 					}
 					
-					if(YAWLFunctions.getSplitType(t).equals(TType.XOR)){
+					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.XOR)){
 						boolean first = true;
 						for(Object out : flatAccess.getOut(t)){
 							if(out instanceof Arc){
@@ -124,7 +124,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 						}
 					}
 					
-					if(YAWLFunctions.getSplitType(t).equals(TType.XOR)){
+					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.XOR)){
 						for(Object out : flatAccess.getOut(t)){
 							if(out instanceof Arc){
 								SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
@@ -145,7 +145,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 		NetMarking mark = new NetMarking();
 		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : getFlatAccess().getPlaces())
 		{
-			if(place instanceof Place && YAWLFunctions.getType(place) == PType.START)
+			if(place instanceof Place && YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place)place) == PType.START)
 			{
 				mark.SetMarking(place, 1);
 			}

@@ -1,4 +1,4 @@
-package dk.dtu.compute.mbse.tutorial.yawl.graphics.figures;
+package dk.dtu.compute.mbse.yawl.graphics.figures;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -26,14 +26,14 @@ public class YAWLArcFigure extends ArcFigure {
 	
 	public YAWLArcFigure(Arc arc) {
 		super(arc);
-		arcType = YAWLFunctions.getType(arc);
+		arcType = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Arc)arc);
 		setGraphics();
 	}
 
 	@Override
 	public void update() {
 		AType oldArcType = arcType;
-		arcType = YAWLFunctions.getType(arc);
+		arcType = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Arc)arc);
 		if (arcType != oldArcType) {
 			setGraphics();
 			// Notify attached target node of the change (which will initiate the update of the

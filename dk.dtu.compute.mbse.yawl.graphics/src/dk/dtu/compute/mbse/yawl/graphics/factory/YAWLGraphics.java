@@ -1,4 +1,4 @@
-package dk.dtu.compute.mbse.tutorial.yawl.graphics.factory;
+package dk.dtu.compute.mbse.yawl.graphics.factory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,11 @@ import org.pnml.tools.epnk.gmf.extensions.graphics.IArcFigure;
 import org.pnml.tools.epnk.gmf.extensions.graphics.IUpdateableFigure;
 import org.pnml.tools.epnk.pnmlcoremodel.Arc;
 import org.pnml.tools.epnk.pnmlcoremodel.Place;
+import org.pnml.tools.epnk.pnmlcoremodel.Transition;
 
-import dk.dtu.compute.mbse.tutorial.yawl.graphics.figures.YAWLArcFigure;
-import dk.dtu.compute.mbse.tutorial.yawl.graphics.figures.YAWLPlaceFigure;
 import dk.dtu.compute.mbse.yawl.YawlPackage;
+import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLArcFigure;
+import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLPlaceFigure;
 
 /**
  * The graphical extension the the Technical Net extension. This is
@@ -67,8 +68,8 @@ public class YAWLGraphics extends GraphicalExtension {
 	/*
 	@Override
 	public IUpdateableFigure createTransitionFigure(Transition transition) {
-		if (transition instanceof org.pnml.tools.epnk.tutorials.app.technical.Transition) {
-			return new TechnicalNetTypeTransitionFigure(transition);
+		if (transition instanceof dk.dtu.compute.mbse.yawl.Transition) {
+			return new YAWLTransitionFigure(transition);
 		}
 		return null;
 	}
