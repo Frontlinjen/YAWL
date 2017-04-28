@@ -40,8 +40,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 		ApplicationUIManager manager = this.getPresentationManager();
 		manager.addActionHandler(new EnabledTransitionHandler(this));
 		manager.addActionHandler(new SelectArcHandler(this));
-		manager.addPresentationHandler(new YAWLAnnotationsPresentationHandler());
-		
+		manager.addPresentationHandler(new YAWLAnnotationsPresentationHandler());		
 		ncl = new NetChangeListener(this);
 	}
 	
@@ -84,7 +83,6 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					anno.getObjectAnnotations().add(transAnno);
 					
 					//TODO also annotate reference transitions referring to this transition
-					
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.XOR)){
 						boolean first = true;
 						for(Object in : flatAccess.getIn(t)){
@@ -108,7 +106,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 							}
 						}
 					}
-					
+
 					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.XOR)){
 						boolean first = true;
 						for(Object out : flatAccess.getOut(t)){
@@ -126,7 +124,6 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 							}
 						}
 					}
-					
 					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.XOR)){
 						for(Object out : flatAccess.getOut(t)){
 							if(out instanceof Arc){

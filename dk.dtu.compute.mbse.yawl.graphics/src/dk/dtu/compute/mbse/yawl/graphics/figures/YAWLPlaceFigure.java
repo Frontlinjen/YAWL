@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Display;
 import org.pnml.tools.epnk.gmf.extensions.graphics.figures.PlaceFigure;
 import org.pnml.tools.epnk.pnmlcoremodel.Place;
 
+import dk.dtu.compute.mbse.yawl.Arc;
 import dk.dtu.compute.mbse.yawl.PType;
 import dk.dtu.compute.mbse.yawl.functions.YAWLFunctions;
 
@@ -26,7 +27,7 @@ public class YAWLPlaceFigure extends PlaceFigure {
 	
 	public YAWLPlaceFigure(Place place) {
 		super(place);
-		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place)place);
+		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place) place);
 	}
 
 	/**
@@ -35,9 +36,8 @@ public class YAWLPlaceFigure extends PlaceFigure {
 	 */
 	@Override
 	public void update() {
-		PType oldtype = type;
-		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place)place);
-		
+		PType oldtype = type;s
+		type = YAWLFunctions.getType((dk.dtu.compute.mbse.yawl.Place) place);
 		if (oldtype != type) {
 			// only call the repaint() method, when there was a change that has
 			// an effect to the graphical appearance of the transition
@@ -72,7 +72,25 @@ public class YAWLPlaceFigure extends PlaceFigure {
 			graphics.popState();
 		}
 		
-		
+		if(type.equals(PType.FINISH)){
+			graphics.pushState();
+			
+			Display display = Display.getCurrent();
+			Color red = display.getSystemColor(SWT.COLOR_RED);
+			graphics.setBackgroundColor(red);
+			graphics.setLineWidth(1);
+			int x1 = rectangle.x + d1;
+			int y1 = rectangle.y + d2;
+			int x2 = rectangle.x + 2*d1;
+			int y2 = y1;
+			int x3 = x2;
+			int y3 = rectangle.y + 2*d2;
+			int x4 = x1;
+			int y4 = y3;
+			graphics.fillPolygon(new int[]{x1,y1, x2,y2, x3,y3, x4,y4});
+			graphics.drawPolygon(new int[]{x1,y1, x2,y2, x3,y3, x4,y4});
+			graphics.popState();
+		}
 	}
 
 }
