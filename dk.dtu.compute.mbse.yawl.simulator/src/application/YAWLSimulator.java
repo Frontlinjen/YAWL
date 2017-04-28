@@ -16,6 +16,8 @@ import org.pnml.tools.epnk.applications.ui.ApplicationUIManager;
 import org.pnml.tools.epnk.helpers.FlatAccess;
 import org.pnml.tools.epnk.pnmlcoremodel.Node;
 import org.pnml.tools.epnk.pnmlcoremodel.PetriNet;
+import org.pnml.tools.epnk.pnmlcoremodel.PlaceNode;
+import org.pnml.tools.epnk.pnmlcoremodel.TransitionNode;
 
 import dk.dtu.compute.mbse.yawl.Arc;
 import dk.dtu.compute.mbse.yawl.PType;
@@ -218,23 +220,104 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	}
 	
 	public NetMarking fireTransition(FlatAccess fa, NetMarking n1, Arc selectedInArc, Transition t, Collection<Arc> selectedOutArcs){
-		Node fromNode = selectedInArc.getSource();
-		if(fromNode instanceof Place){
-			Place fromPlace = (Place) fromNode;
-			//TODO Remove token
-			//TODO Unselect
-		}
-		Arc[] arcArray = (Arc[]) selectedOutArcs.toArray();
-		for(Arc arc : arcArray){
-			Place target = (Place) arc.getTarget();
-			//TODO Give token
-			//TODO Unselect
-		}
+		TType joinType = YAWLFunctions.getJoinType(t);
+		TType splitType = YAWLFunctions.getSplitType(t);
 		
-		//flataccess?
-		//netmarking?
-		
-		return null;
+		//Remove tokens from source
+		if(joinType.equals(TType.OR)){
+			for(Object in : fa.getIn(t)){
+				if(in instanceof Arc){
+					Arc inArc = (Arc) in;
+					if(!YAWLFunctions.isResetArc(inArc)){
+						Object source = inArc.getSource();
+						if(source instanceof PlaceNode){
+							source = fa.resolve((PlaceNode) source);
+							if(source instanceof Place && n1.GetMarking((Place)source) > 0){
+								n1.Decrement((Place) source, 1);
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(joinType.equals(TType.AND)){
+			for(Object in : fa.getIn(t)){
+				if(in instanceof Arc){
+					Arc inArc = (Arc) in;
+					if(!YAWLFunctions.isResetArc(inArc)){
+						Object source = inArc.getSource();
+						if(source instanceof PlaceNode){
+							source = fa.resolve((PlaceNode) source);
+							if(source instanceof Place){
+								n1.Decrement((Place) source, 1);
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(joinType.equals(TType.XOR) && selectedInArc != null && !YAWLFunctions.isResetArc(selectedInArc)){
+			Node target = selectedInArc.getTarget();
+			if(target instanceof TransitionNode){
+				Transition transition = (Transition) fa.resolve((TransitionNode) target);
+				if(t == transition){
+					Object source = selectedInArc.getSource();
+					if(source instanceof PlaceNode){
+						source = fa.resolve((PlaceNode) source);
+						if(source instanceof Place && n1.GetMarking((Place)source) > 0){
+							n1.Decrement((Place) source, 1);
+						}
+					}
+				}
+			}
+		}
+		//Handle resetArcs
+		for(Object in : fa.getIn(t)){
+			if(in instanceof Arc){
+				Arc inArc = (Arc) in;
+				if(YAWLFunctions.isResetArc(inArc)){
+					Object source = inArc.getSource();
+					if(source instanceof PlaceNode){
+						source = fa.resolve((PlaceNode) source);
+						if(source instanceof Place){
+							n1.SetMarking((Place)source, 0);
+						}
+					}
+				}
+			}
+		}
+		//Add tokens to target
+		if(splitType.equals(TType.AND)){
+			for(Object out : fa.getOut(t)){
+				if(out instanceof Arc){
+					Object target = ((Arc)out).getTarget();
+					if(target instanceof PlaceNode){
+						target = fa.resolve((PlaceNode) target);
+						if(target instanceof Place){
+							n1.Increment((Place) target, 1);
+						}
+					}
+				}
+			}
+		}
+		else if((splitType.equals(TType.OR) || splitType.equals(TType.XOR)) && selectedOutArcs != null){
+			for(Arc outArc : selectedOutArcs){
+				Node source = ((org.pnml.tools.epnk.pnmlcoremodel.Arc) outArc).getSource();
+				if(source instanceof TransitionNode){
+					source = fa.resolve((TransitionNode)source);
+				}
+				if(t == source){
+					Object target = outArc.getTarget();
+					if(target instanceof PlaceNode){
+						target = fa.resolve((PlaceNode) target);
+						if(target instanceof Place){
+							n1.Increment((Place) target, 1);
+						}
+					}
+				}
+			}
+		}
+		return n1;
 	}
 	
 	public FlatAccess getFlatAccess(){
