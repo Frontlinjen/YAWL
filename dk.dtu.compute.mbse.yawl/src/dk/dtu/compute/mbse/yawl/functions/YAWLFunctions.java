@@ -23,7 +23,7 @@ public class YAWLFunctions {
 	public static AType getType(Arc arc){
 		if(arc instanceof Arc){
 			arc = (Arc) arc;
-			ArcType a = (ArcType) arc;
+			ArcType a = arc.getArcType();
 			if(a != null && a.getText() != null){
 				return a.getText();
 			}
@@ -39,7 +39,7 @@ public class YAWLFunctions {
 	public static PType getType(Place pla){
 		if(pla instanceof Place){
 			pla = (Place) pla;
-			PlaceType p = (PlaceType) pla;
+			PlaceType p = pla.getPlaceType();
 			if(p != null && p.getText() != null){
 				return p.getText();
 			}
