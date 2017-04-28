@@ -1,8 +1,10 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import org.pnml.tools.epnk.annotations.netannotations.ObjectAnnotation;
 import org.pnml.tools.epnk.applications.ApplicationWithUIManager;
 import org.pnml.tools.epnk.applications.ui.ApplicationUIManager;
 import org.pnml.tools.epnk.helpers.FlatAccess;
+import org.pnml.tools.epnk.pnmlcoremodel.Node;
 import org.pnml.tools.epnk.pnmlcoremodel.PetriNet;
 
 import dk.dtu.compute.mbse.yawl.Arc;
@@ -215,7 +218,22 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	}
 	
 	public NetMarking fireTransition(FlatAccess fa, NetMarking n1, Arc selectedInArc, Transition t, Collection<Arc> selectedOutArcs){
-		//TODO
+		Node fromNode = selectedInArc.getSource();
+		if(fromNode instanceof Place){
+			Place fromPlace = (Place) fromNode;
+			//TODO Remove token
+			//TODO Unselect
+		}
+		Arc[] arcArray = (Arc[]) selectedOutArcs.toArray();
+		for(Arc arc : arcArray){
+			Place target = (Place) arc.getTarget();
+			//TODO Give token
+			//TODO Unselect
+		}
+		
+		//flataccess?
+		//netmarking?
+		
 		return null;
 	}
 	
