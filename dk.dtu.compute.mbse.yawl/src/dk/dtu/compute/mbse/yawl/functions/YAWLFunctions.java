@@ -1,5 +1,13 @@
 package dk.dtu.compute.mbse.yawl.functions;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.pnml.tools.epnk.pnmlcoremodel.Node;
+import org.pnml.tools.epnk.pnmlcoremodel.PlaceNode;
+import org.pnml.tools.epnk.pnmlcoremodel.RefPlace;
+import org.pnml.tools.epnk.pnmlcoremodel.TransitionNode;
+
 import dk.dtu.compute.mbse.yawl.AType;
 import dk.dtu.compute.mbse.yawl.Arc;
 import dk.dtu.compute.mbse.yawl.ArcType;
@@ -37,6 +45,41 @@ public class YAWLFunctions {
 			}
 		}
 		return PType.NORMAL;
+	}
+
+	public static Place resolve(PlaceNode place){
+		if(place instanceof Place) {
+			return (Place) place;
+		} else if (place instanceof RefPlace){
+			RefPlace refNode = (RefPlace) place;
+			Set<RefPlace> visited = new HashSet<RefPlace>();//For circular detection
+			while(!visited.contains(refNode)){
+				visited.add(refNode);
+				PlaceNode reference = refNode.getRef();
+				if(reference instanceof RefPlace){
+					refNode = (RefPlace) reference;
+				}
+				else if(reference instanceof Place)
+				{
+					return (Place)reference;
+				}
+				else{
+					return null;
+				}
+				
+			}
+		}
+		return null;
+	}
+	
+	public static Node resolve(Node node){
+		if(node instanceof TransitionNode){
+			return resolve((TransitionNode) node);
+		}
+		else if(node instanceof PlaceNode) {
+			return resolve((PlaceNode) node);
+		}
+		return null;
 	}
 	
 	public static TType getJoinType(Transition tra){
