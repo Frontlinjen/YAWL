@@ -6,6 +6,7 @@ import java.util.Set;
 import org.pnml.tools.epnk.pnmlcoremodel.Node;
 import org.pnml.tools.epnk.pnmlcoremodel.PlaceNode;
 import org.pnml.tools.epnk.pnmlcoremodel.RefPlace;
+import org.pnml.tools.epnk.pnmlcoremodel.RefTransition;
 import org.pnml.tools.epnk.pnmlcoremodel.TransitionNode;
 
 import dk.dtu.compute.mbse.yawl.AType;
@@ -72,6 +73,31 @@ public class YAWLFunctions {
 		return null;
 	}
 	
+	public static Transition resolve(TransitionNode trans){
+		if(trans instanceof Transition) {
+			return (Transition) trans;
+		} else if (trans instanceof RefTransition){
+			RefTransition refNode = (RefTransition) trans;
+			Set<RefTransition> visited = new HashSet<RefTransition>();//For circular detection
+			while(!visited.contains(refNode)){
+				visited.add(refNode);
+				TransitionNode reference = refNode.getRef();
+				if(reference instanceof RefTransition){
+					refNode = (RefTransition) reference;
+					continue;
+				}
+				else if(reference instanceof Transition)
+				{
+					return (Transition)reference;
+				}
+				else{
+					return null;
+				}
+				
+			}
+		}
+		return null;
+	}
 	public static Node resolve(Node node){
 		if(node instanceof TransitionNode){
 			return resolve((TransitionNode) node);
