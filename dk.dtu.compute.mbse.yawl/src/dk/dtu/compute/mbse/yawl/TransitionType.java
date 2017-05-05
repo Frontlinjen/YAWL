@@ -17,7 +17,7 @@ import org.pnml.tools.epnk.pnmlcoremodel.Attribute;
  * </ul>
  *
  * @see dk.dtu.compute.mbse.yawl.YawlPackage#getTransitionType()
- * @model extendedMetaData="name='Attribute'"
+ * @model
  * @generated
  */
 public interface TransitionType extends Attribute {

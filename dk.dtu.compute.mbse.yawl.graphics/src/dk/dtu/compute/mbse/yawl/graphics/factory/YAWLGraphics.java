@@ -14,6 +14,8 @@ import org.pnml.tools.epnk.pnmlcoremodel.Transition;
 import dk.dtu.compute.mbse.yawl.YawlPackage;
 import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLArcFigure;
 import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLPlaceFigure;
+import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLJTransitionFigure;
+import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLSTransitionFigure;
 
 /**
  * The graphical extension the the Technical Net extension. This is
@@ -42,9 +44,7 @@ public class YAWLGraphics extends GraphicalExtension {
 		if (netType.equals(YawlPackage.eINSTANCE.getYAWLNet())) {
 			results.add(YawlPackage.eINSTANCE.getArc());
 			results.add(YawlPackage.eINSTANCE.getPlace());
-			// No graphical extension for places
-			// results.add((TechnicalPackage.eINSTANCE.getPlace());
-			//results.add(TechnicalPackage.eINSTANCE.getTransition());
+			results.add(YawlPackage.eINSTANCE.getTransition());
 		}
 		return results;
 	}
@@ -65,13 +65,17 @@ public class YAWLGraphics extends GraphicalExtension {
 		return null;
 	}
 
-	/*
 	@Override
 	public IUpdateableFigure createTransitionFigure(Transition transition) {
 		if (transition instanceof dk.dtu.compute.mbse.yawl.Transition) {
-			return new YAWLTransitionFigure(transition);
+			if(transition instanceof dk.dtu.compute.mbse.yawl.TransitionJType){
+				return new YAWLJTransitionFigure(transition);
+			}
+			if(transition instanceof dk.dtu.compute.mbse.yawl.TransitionSType){
+				return new YAWLSTransitionFigure(transition);
+			}
 		}
 		return null;
 	}
-*/
+
 }

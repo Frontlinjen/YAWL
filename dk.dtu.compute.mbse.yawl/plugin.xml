@@ -59,7 +59,7 @@
 							  or
 							( self.source.oclIsKindOf(pnmlcoremodel::TransitionNode) and
  							  self.target.oclIsKindOf(pnmlcoremodel::PlaceNode) and
-  							  self.type->size() = 0 )
+  							  self.arcType->size() = 0 )
 						]]>
 				</constraint>
 					

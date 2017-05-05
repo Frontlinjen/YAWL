@@ -17,7 +17,7 @@ import org.pnml.tools.epnk.pnmlcoremodel.Attribute;
  * </ul>
  *
  * @see dk.dtu.compute.mbse.yawl.YawlPackage#getPlaceType()
- * @model extendedMetaData="name='Attribute'"
+ * @model
  * @generated
  */
 public interface PlaceType extends Attribute {
@@ -34,7 +34,7 @@ public interface PlaceType extends Attribute {
 	 * @see dk.dtu.compute.mbse.yawl.PType
 	 * @see #setText(PType)
 	 * @see dk.dtu.compute.mbse.yawl.YawlPackage#getPlaceType_Text()
-	 * @model extendedMetaData="namespace=''"
+	 * @model
 	 * @generated
 	 */
 	PType getText();

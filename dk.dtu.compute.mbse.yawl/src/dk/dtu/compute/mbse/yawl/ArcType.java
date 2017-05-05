@@ -17,7 +17,7 @@ import org.pnml.tools.epnk.pnmlcoremodel.Attribute;
  * </ul>
  *
  * @see dk.dtu.compute.mbse.yawl.YawlPackage#getArcType()
- * @model extendedMetaData="name='toolspecific'"
+ * @model
  * @generated
  */
 public interface ArcType extends Attribute {

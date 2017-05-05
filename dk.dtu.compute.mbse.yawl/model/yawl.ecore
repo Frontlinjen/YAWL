@@ -3,7 +3,7 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="yawl" nsURI="http://se.compute.dtu.dk/mbse/yawl" nsPrefix="yawl">
   <eClassifiers xsi:type="ecore:EClass" name="YAWLNet" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//PetriNetType"/>
   <eClassifiers xsi:type="ecore:EClass" name="Place" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Place">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="PlaceType" eType="#//PlaceType"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//PlaceType"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PType">
@@ -12,19 +12,12 @@
     <eLiterals name="FINISH" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PlaceType" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Attribute">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="Attribute"/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="#//PType">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="namespace" value=""/>
-      </eAnnotations>
-    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="#//PType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Transition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="JType" eType="#//TransitionType"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="joinType" eType="#//TransitionType"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="SType" eType="#//TransitionType"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="splitType" eType="#//TransitionType"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TType">
@@ -33,7 +26,7 @@
     <eLiterals name="XOR" value="6"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Arc" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Arc">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ArcType" eType="#//ArcType"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arcType" eType="#//ArcType"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AType">
@@ -41,15 +34,9 @@
     <eLiterals name="RESET" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TransitionType" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Attribute">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="Attribute"/>
-    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="#//TType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ArcType" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Attribute">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="toolspecific"/>
-    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="#//AType"/>
   </eClassifiers>
 </ecore:EPackage>

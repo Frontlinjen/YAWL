@@ -21,7 +21,7 @@ public class YAWLNetImpl extends PetriNetTypeImpl implements YAWLNet {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated NOT
-	 * @author s153073@student.dtu.dk & s154174@student.dtu.dk
+	 * @author Mikkel & Thomas
 	 */
 	public YAWLNetImpl() {
 		super();

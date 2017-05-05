@@ -12,8 +12,8 @@ package dk.dtu.compute.mbse.yawl;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link dk.dtu.compute.mbse.yawl.Transition#getJType <em>JType</em>}</li>
- *   <li>{@link dk.dtu.compute.mbse.yawl.Transition#getSType <em>SType</em>}</li>
+ *   <li>{@link dk.dtu.compute.mbse.yawl.Transition#getJoinType <em>Join Type</em>}</li>
+ *   <li>{@link dk.dtu.compute.mbse.yawl.Transition#getSplitType <em>Split Type</em>}</li>
  * </ul>
  *
  * @see dk.dtu.compute.mbse.yawl.YawlPackage#getTransition()
@@ -22,55 +22,55 @@ package dk.dtu.compute.mbse.yawl;
  */
 public interface Transition extends org.pnml.tools.epnk.pnmlcoremodel.Transition {
 	/**
-	 * Returns the value of the '<em><b>JType</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Join Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>JType</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Join Type</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>JType</em>' containment reference.
-	 * @see #setJType(TransitionType)
-	 * @see dk.dtu.compute.mbse.yawl.YawlPackage#getTransition_JType()
+	 * @return the value of the '<em>Join Type</em>' containment reference.
+	 * @see #setJoinType(TransitionType)
+	 * @see dk.dtu.compute.mbse.yawl.YawlPackage#getTransition_JoinType()
 	 * @model containment="true"
 	 * @generated
 	 */
-	TransitionType getJType();
+	TransitionType getJoinType();
 
 	/**
-	 * Sets the value of the '{@link dk.dtu.compute.mbse.yawl.Transition#getJType <em>JType</em>}' containment reference.
+	 * Sets the value of the '{@link dk.dtu.compute.mbse.yawl.Transition#getJoinType <em>Join Type</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>JType</em>' containment reference.
-	 * @see #getJType()
+	 * @param value the new value of the '<em>Join Type</em>' containment reference.
+	 * @see #getJoinType()
 	 * @generated
 	 */
-	void setJType(TransitionType value);
+	void setJoinType(TransitionType value);
 
 	/**
-	 * Returns the value of the '<em><b>SType</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Split Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>SType</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Split Type</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>SType</em>' containment reference.
-	 * @see #setSType(TransitionType)
-	 * @see dk.dtu.compute.mbse.yawl.YawlPackage#getTransition_SType()
+	 * @return the value of the '<em>Split Type</em>' containment reference.
+	 * @see #setSplitType(TransitionType)
+	 * @see dk.dtu.compute.mbse.yawl.YawlPackage#getTransition_SplitType()
 	 * @model containment="true"
 	 * @generated
 	 */
-	TransitionType getSType();
+	TransitionType getSplitType();
 
 	/**
-	 * Sets the value of the '{@link dk.dtu.compute.mbse.yawl.Transition#getSType <em>SType</em>}' containment reference.
+	 * Sets the value of the '{@link dk.dtu.compute.mbse.yawl.Transition#getSplitType <em>Split Type</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>SType</em>' containment reference.
-	 * @see #getSType()
+	 * @param value the new value of the '<em>Split Type</em>' containment reference.
+	 * @see #getSplitType()
 	 * @generated
 	 */
-	void setSType(TransitionType value);
+	void setSplitType(TransitionType value);
 
 } // Transition

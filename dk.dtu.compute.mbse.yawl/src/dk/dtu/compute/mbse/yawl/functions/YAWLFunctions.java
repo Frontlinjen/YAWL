@@ -19,6 +19,10 @@ import dk.dtu.compute.mbse.yawl.TType;
 import dk.dtu.compute.mbse.yawl.Transition;
 import dk.dtu.compute.mbse.yawl.TransitionType;
 
+/**
+ * @author Thomas and Mikkel
+ */
+
 public class YAWLFunctions {
 
 	public static AType getType(Arc arc){
@@ -40,7 +44,7 @@ public class YAWLFunctions {
 	public static PType getType(Place pla){
 		if(pla instanceof Place){
 			pla = (Place) pla;
-			PlaceType p = pla.getPlaceType();
+			PlaceType p = pla.getType();
 			if(p != null && p.getText() != null){
 				return p.getText();
 			}

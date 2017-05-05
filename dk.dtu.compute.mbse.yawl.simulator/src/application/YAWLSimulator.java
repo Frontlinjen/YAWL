@@ -332,14 +332,5 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 		}
 		return flatAccess;
 	}
-	
-	public boolean isSavable(){
-		//TODO
-		return false;
-	}
-	
-	public void shutDown(){
-		//TODO
-	}
-	
+		
 }
