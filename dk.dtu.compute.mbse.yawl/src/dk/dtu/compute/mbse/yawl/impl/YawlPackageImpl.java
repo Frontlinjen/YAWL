@@ -189,7 +189,7 @@ public class YawlPackageImpl extends EPackageImpl implements YawlPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPlace_PlaceType() {
+	public EReference getPlace_Type() {
 		return (EReference)placeEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -225,7 +225,7 @@ public class YawlPackageImpl extends EPackageImpl implements YawlPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTransition_JType() {
+	public EReference getTransition_JoinType() {
 		return (EReference)transitionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -234,7 +234,7 @@ public class YawlPackageImpl extends EPackageImpl implements YawlPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTransition_SType() {
+	public EReference getTransition_SplitType() {
 		return (EReference)transitionEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -350,14 +350,14 @@ public class YawlPackageImpl extends EPackageImpl implements YawlPackage {
 		yawlNetEClass = createEClass(YAWL_NET);
 
 		placeEClass = createEClass(PLACE);
-		createEReference(placeEClass, PLACE__PLACE_TYPE);
+		createEReference(placeEClass, PLACE__TYPE);
 
 		placeTypeEClass = createEClass(PLACE_TYPE);
 		createEAttribute(placeTypeEClass, PLACE_TYPE__TEXT);
 
 		transitionEClass = createEClass(TRANSITION);
-		createEReference(transitionEClass, TRANSITION__JTYPE);
-		createEReference(transitionEClass, TRANSITION__STYPE);
+		createEReference(transitionEClass, TRANSITION__JOIN_TYPE);
+		createEReference(transitionEClass, TRANSITION__SPLIT_TYPE);
 
 		arcEClass = createEClass(ARC);
 		createEReference(arcEClass, ARC__ARC_TYPE);
@@ -417,17 +417,17 @@ public class YawlPackageImpl extends EPackageImpl implements YawlPackage {
 		initEClass(yawlNetEClass, YAWLNet.class, "YAWLNet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(placeEClass, Place.class, "Place", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPlace_PlaceType(), this.getPlaceType(), null, "PlaceType", null, 0, 1, Place.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPlace_Type(), this.getPlaceType(), null, "type", null, 0, 1, Place.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(placeTypeEClass, PlaceType.class, "PlaceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPlaceType_Text(), this.getPType(), "text", null, 0, 1, PlaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTransition_JType(), this.getTransitionType(), null, "JType", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTransition_SType(), this.getTransitionType(), null, "SType", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTransition_JoinType(), this.getTransitionType(), null, "joinType", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTransition_SplitType(), this.getTransitionType(), null, "splitType", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(arcEClass, Arc.class, "Arc", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getArc_ArcType(), this.getArcType(), null, "ArcType", null, 0, 1, Arc.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getArc_ArcType(), this.getArcType(), null, "arcType", null, 0, 1, Arc.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(transitionTypeEClass, TransitionType.class, "TransitionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTransitionType_Text(), this.getTType(), "text", null, 0, 1, TransitionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -452,44 +452,6 @@ public class YawlPackageImpl extends EPackageImpl implements YawlPackage {
 
 		// Create resource
 		createResource(eNS_URI);
-
-		// Create annotations
-		// http:///org/eclipse/emf/ecore/util/ExtendedMetaData
-		createExtendedMetaDataAnnotations();
-	}
-
-	/**
-	 * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";	
-		addAnnotation
-		  (placeTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "Attribute"
-		   });	
-		addAnnotation
-		  (getPlaceType_Text(), 
-		   source, 
-		   new String[] {
-			 "namespace", ""
-		   });	
-		addAnnotation
-		  (transitionTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "Attribute"
-		   });	
-		addAnnotation
-		  (arcTypeEClass, 
-		   source, 
-		   new String[] {
-			 "name", "toolspecific"
-		   });
 	}
 
 } //YawlPackageImpl

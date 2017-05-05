@@ -44,7 +44,7 @@ public class YAWLFunctions {
 	public static PType getType(Place pla){
 		if(pla instanceof Place){
 			pla = (Place) pla;
-			PlaceType p = pla.getPlaceType();
+			PlaceType p = pla.getType();
 			if(p != null && p.getText() != null){
 				return p.getText();
 			}

@@ -151,13 +151,13 @@ public interface YawlPackage extends EPackage {
 	int PLACE__IN = PnmlcoremodelPackage.PLACE__IN;
 
 	/**
-	 * The feature id for the '<em><b>Place Type</b></em>' containment reference.
+	 * The feature id for the '<em><b>Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PLACE__PLACE_TYPE = PnmlcoremodelPackage.PLACE_FEATURE_COUNT + 0;
+	int PLACE__TYPE = PnmlcoremodelPackage.PLACE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Place</em>' class.
@@ -297,22 +297,22 @@ public interface YawlPackage extends EPackage {
 	int TRANSITION__IN = PnmlcoremodelPackage.TRANSITION__IN;
 
 	/**
-	 * The feature id for the '<em><b>JType</b></em>' containment reference.
+	 * The feature id for the '<em><b>Join Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSITION__JTYPE = PnmlcoremodelPackage.TRANSITION_FEATURE_COUNT + 0;
+	int TRANSITION__JOIN_TYPE = PnmlcoremodelPackage.TRANSITION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>SType</b></em>' containment reference.
+	 * The feature id for the '<em><b>Split Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSITION__STYPE = PnmlcoremodelPackage.TRANSITION_FEATURE_COUNT + 1;
+	int TRANSITION__SPLIT_TYPE = PnmlcoremodelPackage.TRANSITION_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Transition</em>' class.
@@ -575,15 +575,15 @@ public interface YawlPackage extends EPackage {
 	EClass getPlace();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link dk.dtu.compute.mbse.yawl.Place#getPlaceType <em>Place Type</em>}'.
+	 * Returns the meta object for the containment reference '{@link dk.dtu.compute.mbse.yawl.Place#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Place Type</em>'.
-	 * @see dk.dtu.compute.mbse.yawl.Place#getPlaceType()
+	 * @return the meta object for the containment reference '<em>Type</em>'.
+	 * @see dk.dtu.compute.mbse.yawl.Place#getType()
 	 * @see #getPlace()
 	 * @generated
 	 */
-	EReference getPlace_PlaceType();
+	EReference getPlace_Type();
 
 	/**
 	 * Returns the meta object for class '{@link dk.dtu.compute.mbse.yawl.PlaceType <em>Place Type</em>}'.
@@ -617,26 +617,26 @@ public interface YawlPackage extends EPackage {
 	EClass getTransition();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link dk.dtu.compute.mbse.yawl.Transition#getJType <em>JType</em>}'.
+	 * Returns the meta object for the containment reference '{@link dk.dtu.compute.mbse.yawl.Transition#getJoinType <em>Join Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>JType</em>'.
-	 * @see dk.dtu.compute.mbse.yawl.Transition#getJType()
+	 * @return the meta object for the containment reference '<em>Join Type</em>'.
+	 * @see dk.dtu.compute.mbse.yawl.Transition#getJoinType()
 	 * @see #getTransition()
 	 * @generated
 	 */
-	EReference getTransition_JType();
+	EReference getTransition_JoinType();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link dk.dtu.compute.mbse.yawl.Transition#getSType <em>SType</em>}'.
+	 * Returns the meta object for the containment reference '{@link dk.dtu.compute.mbse.yawl.Transition#getSplitType <em>Split Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>SType</em>'.
-	 * @see dk.dtu.compute.mbse.yawl.Transition#getSType()
+	 * @return the meta object for the containment reference '<em>Split Type</em>'.
+	 * @see dk.dtu.compute.mbse.yawl.Transition#getSplitType()
 	 * @see #getTransition()
 	 * @generated
 	 */
-	EReference getTransition_SType();
+	EReference getTransition_SplitType();
 
 	/**
 	 * Returns the meta object for class '{@link dk.dtu.compute.mbse.yawl.Arc <em>Arc</em>}'.
@@ -774,12 +774,12 @@ public interface YawlPackage extends EPackage {
 		EClass PLACE = eINSTANCE.getPlace();
 
 		/**
-		 * The meta object literal for the '<em><b>Place Type</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PLACE__PLACE_TYPE = eINSTANCE.getPlace_PlaceType();
+		EReference PLACE__TYPE = eINSTANCE.getPlace_Type();
 
 		/**
 		 * The meta object literal for the '{@link dk.dtu.compute.mbse.yawl.impl.PlaceTypeImpl <em>Place Type</em>}' class.
@@ -810,20 +810,20 @@ public interface YawlPackage extends EPackage {
 		EClass TRANSITION = eINSTANCE.getTransition();
 
 		/**
-		 * The meta object literal for the '<em><b>JType</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Join Type</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TRANSITION__JTYPE = eINSTANCE.getTransition_JType();
+		EReference TRANSITION__JOIN_TYPE = eINSTANCE.getTransition_JoinType();
 
 		/**
-		 * The meta object literal for the '<em><b>SType</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Split Type</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TRANSITION__STYPE = eINSTANCE.getTransition_SType();
+		EReference TRANSITION__SPLIT_TYPE = eINSTANCE.getTransition_SplitType();
 
 		/**
 		 * The meta object literal for the '{@link dk.dtu.compute.mbse.yawl.impl.ArcImpl <em>Arc</em>}' class.
