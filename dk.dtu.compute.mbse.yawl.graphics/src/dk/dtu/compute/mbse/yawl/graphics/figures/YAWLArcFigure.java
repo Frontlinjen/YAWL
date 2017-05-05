@@ -17,7 +17,7 @@ import dk.dtu.compute.mbse.yawl.functions.YAWLFunctions;
 
 /**
  * 
- * @author ekki@dtu.dk
+ * @author Mikkel
  * 
  */
 public class YAWLArcFigure extends ArcFigure {

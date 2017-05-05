@@ -74,6 +74,7 @@ public class YAWLJTransitionFigure extends TransitionFigure{
 			graphics.popState();
 		}
 	}
+	
 
 
 }

@@ -72,6 +72,10 @@ public class YAWLPlaceFigure extends PlaceFigure {
 			graphics.popState();
 		}
 		
+		/**
+		 * @author Mikkel
+		 */
+		
 		if(type.equals(PType.FINISH)){
 			graphics.pushState();
 			

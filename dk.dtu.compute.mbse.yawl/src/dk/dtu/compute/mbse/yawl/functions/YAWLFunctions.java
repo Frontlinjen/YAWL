@@ -19,6 +19,10 @@ import dk.dtu.compute.mbse.yawl.TType;
 import dk.dtu.compute.mbse.yawl.Transition;
 import dk.dtu.compute.mbse.yawl.TransitionType;
 
+/**
+ * @author Thomas and Mikkel
+ */
+
 public class YAWLFunctions {
 
 	public static AType getType(Arc arc){
