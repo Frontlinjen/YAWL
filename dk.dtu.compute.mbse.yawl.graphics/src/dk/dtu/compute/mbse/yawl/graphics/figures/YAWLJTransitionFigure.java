@@ -9,6 +9,12 @@ import dk.dtu.compute.mbse.yawl.JType;
 import dk.dtu.compute.mbse.yawl.TType;
 import dk.dtu.compute.mbse.yawl.functions.YAWLFunctions;
 
+/**
+ * 
+ * @author Mikkel
+ *
+ */
+
 public class YAWLJTransitionFigure extends TransitionFigure{
 
 	private TType type;
