@@ -218,7 +218,10 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 		}
 		return false;
 	}
-	
+	/**
+	 * 
+	 * @Author Thomas Bech Madsen
+	 */
 	public NetMarking fireTransition(FlatAccess fa, NetMarking n1, Arc selectedInArc, Transition t, Collection<Arc> selectedOutArcs){
 		TType joinType = YAWLFunctions.getJoinType(t);
 		TType splitType = YAWLFunctions.getSplitType(t);

@@ -39,7 +39,7 @@ public interface YawlannotationsPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://se.compute.dtu.dk/mbse/yawl";
+	String eNS_URI = "http://se.compute.dtu.dk/mbse/yawl/YawlannotationsPackage";
 
 	/**
 	 * The package namespace name.

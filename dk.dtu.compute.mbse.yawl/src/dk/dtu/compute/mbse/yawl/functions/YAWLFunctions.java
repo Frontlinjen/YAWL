@@ -109,7 +109,7 @@ public class YAWLFunctions {
 	}
 	
 	public static TType getJoinType(Transition tra){
-		if(tra instanceof Transition){
+		if(tra instanceof TransitionType){
 			tra = (Transition) tra;
 			TransitionType t = (TransitionType) tra;
 			if(t != null && t.getText() != null){
@@ -120,7 +120,7 @@ public class YAWLFunctions {
 	}
 	
 	public static TType getSplitType(Transition tra){
-		if(tra instanceof Transition){
+		if(tra instanceof TransitionType){
 			tra = (Transition) tra;
 			TransitionType t = (TransitionType) tra;
 			if(t != null && t.getText() != null){

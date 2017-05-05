@@ -24,7 +24,11 @@ import yawlannotations.EnabledTransition;
 import yawlannotations.SelectedArc;
 import yawlannotations.YawlannotationsFactory;
 import yawlannotations.YawlannotationsPackage;
-
+/**
+ * 
+ * @author Thomas Bech Madsen
+ *
+ */
 public class EnabledTransitionHandler implements IActionHandler{ //SE TUTORIAL 8C
 
 	private YAWLSimulator app;

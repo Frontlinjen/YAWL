@@ -6,7 +6,7 @@
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="ObjectAnnotation"/>
     </eAnnotations>
-    <eOperations name="getAction" eType="ecore:EClass ../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Transition"/>
+    <eOperations name="getTransition" eType="ecore:EClass ../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Transition"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="resolved" eType="#//EnabledTransition"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outArcs" upperBound="-1"
         eType="#//SelectedArc" eOpposite="#//SelectedArc/sourceTransition"/>

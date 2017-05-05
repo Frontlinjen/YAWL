@@ -252,9 +252,9 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_Wgr7kB1eEeemMI7odvgZdA" name="getAction() : Transition" tooltipText="getAction() : Transition">
-        <target xmi:type="ecore:EOperation" href="yawlannotations.ecore#//EnabledTransition/getAction"/>
-        <semanticElements xmi:type="ecore:EOperation" href="yawlannotations.ecore#//EnabledTransition/getAction"/>
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_Wgr7kB1eEeemMI7odvgZdA" name="getTransition() : Transition" tooltipText="getTransition() : Transition">
+        <target xmi:type="ecore:EOperation" href="yawlannotations.ecore#//EnabledTransition/getTransition"/>
+        <semanticElements xmi:type="ecore:EOperation" href="yawlannotations.ecore#//EnabledTransition/getTransition"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_WgsioB1eEeemMI7odvgZdA" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
         </ownedStyle>
