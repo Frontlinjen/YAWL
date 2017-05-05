@@ -18,7 +18,7 @@
          name="YAWL Simulator"
          point="org.pnml.tools.epnk.applications.applicationfactory">
       <applicationfactory
-            class="dk.dtu.compute.mbse.yawl.simulator.application.YAWLSimulatorFactory"
+            class="application.YAWLSimulatorFactory"
             description="A simple YAWL simulator for tutorial 8 of the MBSE course">
       </applicationfactory>
    </extension>
