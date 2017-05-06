@@ -40,7 +40,7 @@ public interface YawlPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://se.compute.dtu.dk/mbse/yawl/YawlPackage";
+	String eNS_URI = "http://se.compute.dtu.dk/mbse/yawl";
 
 	/**
 	 * The package namespace name.

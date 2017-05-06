@@ -49,10 +49,10 @@ public class YAWLSingleTransitionFigure extends TransitionFigure{
        
         int x1 = rectangle.x;
 		int y1 = rectangle.y;
-		int x2 = rectangle.width;
+		int x2 = x1 + rectangle.width;
 		int y2 = y1;
 		int x3 = x2;
-		int y3 = rectangle.height;
+		int y3 = y1 + rectangle.height;
 		int x4 = x1;
 		int y4 = y3;
 		graphics.drawLine(x1, y1, x2, y2);
