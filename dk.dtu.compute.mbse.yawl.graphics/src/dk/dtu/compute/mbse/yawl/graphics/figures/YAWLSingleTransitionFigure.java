@@ -29,6 +29,9 @@ public class YAWLSingleTransitionFigure extends TransitionFigure{
 			this.repaint();
 		}
 	}
+    
+    
+    
    
     @Override
     protected void fillShape(Graphics graphics){
