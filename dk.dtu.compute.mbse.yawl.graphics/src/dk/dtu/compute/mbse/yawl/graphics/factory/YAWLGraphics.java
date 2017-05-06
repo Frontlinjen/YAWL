@@ -17,6 +17,7 @@ import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLPlaceFigure;
 import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLJTransitionFigure;
 import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLSTransitionFigure;
 import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLSingleTransitionFigure;
+import dk.dtu.compute.mbse.yawl.graphics.figures.YAWLTransitionFigure;
 
 /**
  * The graphical extension the the Technical Net extension. This is
@@ -68,15 +69,11 @@ public class YAWLGraphics extends GraphicalExtension {
 
 	@Override
 	public IUpdateableFigure createTransitionFigure(Transition transition) {
-		if (transition instanceof dk.dtu.compute.mbse.yawl.Transition) {
-			if(transition instanceof dk.dtu.compute.mbse.yawl.TransitionJType){
-				return new YAWLJTransitionFigure(transition);
-			}
-			if(transition instanceof dk.dtu.compute.mbse.yawl.TransitionSType){
-				return new YAWLSTransitionFigure(transition);
-			}
+		if(transition instanceof dk.dtu.compute.mbse.yawl.Transition)
+		{
+			return new YAWLTransitionFigure(transition);
 		}
-		return new YAWLSingleTransitionFigure(transition);
+		return null;
 	}
 
 }

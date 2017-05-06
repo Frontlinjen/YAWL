@@ -39,18 +39,7 @@ public class YAWLFunctions {
 	public static boolean isResetArc(Arc arc){
 		return getType(arc) == AType.RESET;
 	}
-	
-	
-	public static PType getType(Place pla){
-		if(pla instanceof Place){
-			pla = (Place) pla;
-			PlaceType p = pla.getType();
-			if(p != null && p.getText() != null){
-				return p.getText();
-			}
-		}
-		return PType.NORMAL;
-	}
+
 
 	public static Place resolve(PlaceNode place){
 		if(place instanceof Place) {
@@ -112,26 +101,33 @@ public class YAWLFunctions {
 		return null;
 	}
 	
+	
+	
+	public static PType getType(Place pla){
+		if(pla instanceof Place){
+			pla = (Place) pla;
+			PlaceType p = pla.getType();
+			if(p != null && p.getText() != null){
+				return p.getText();
+			}
+		}
+		return PType.NORMAL;
+	}
+	
 	public static TType getJoinType(Transition tra){
-		if(tra instanceof TransitionType){
-			tra = (Transition) tra;
-			TransitionType t = (TransitionType) tra;
+			TransitionType t = tra.getJoinType();
 			if(t != null && t.getText() != null){
 				return t.getText();
 			}
-		}
-		return TType.OR;
+		return null;
 	}
 	
 	public static TType getSplitType(Transition tra){
-		if(tra instanceof TransitionType){
-			tra = (Transition) tra;
-			TransitionType t = (TransitionType) tra;
+			TransitionType t = tra.getSplitType();
 			if(t != null && t.getText() != null){
 				return t.getText();
 			}
-		}
-		return TType.OR;
+		return null;
 	}
 	
 	
