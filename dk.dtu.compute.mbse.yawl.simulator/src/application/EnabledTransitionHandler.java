@@ -96,7 +96,7 @@ public class EnabledTransitionHandler implements IActionHandler{ //SE TUTORIAL 8
 		}
 		for(SelectedArc selectedArc : resolved.getOutArcs()){
 			if(selectedArc.isSelected()){
-				arcs.add((Arc)selectedArc);
+				arcs.add((Arc)selectedArc.getObject());
 			}
 		}
 		return arcs;
