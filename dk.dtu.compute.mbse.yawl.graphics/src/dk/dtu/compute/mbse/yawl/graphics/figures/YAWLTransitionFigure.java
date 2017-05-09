@@ -11,12 +11,9 @@ import dk.dtu.compute.mbse.yawl.TType;
 import dk.dtu.compute.mbse.yawl.Transition;
 import dk.dtu.compute.mbse.yawl.functions.YAWLFunctions;
 
-
-
-
 /*
  * 
- * @author Sebastian
+ * @author Sebastian + @coauthor Mikkel
  * 
  */
 public class YAWLTransitionFigure extends TransitionFigure {
@@ -48,11 +45,11 @@ public class YAWLTransitionFigure extends TransitionFigure {
 		Rectangle rectangle = getClientArea();
 
 		if(!leftSide){
-			offset = (int)(rectangle.width * 0.5);
+			offset = (int)((float)rectangle.width * (2f/3f));
 		}
 		graphics.drawPolygon(new int[]{offset + 0 + rectangle.x, (int)(rectangle.height * 0.5) + rectangle.y,
-									   offset + (int)(rectangle.width*0.5) + rectangle.x, 0 + rectangle.y, 
-									   offset + (int)(rectangle.width*0.5) + rectangle.x, rectangle.height + rectangle.y });
+									   offset + (int)(rectangle.width*(1f/3f)) + rectangle.x, 0 + rectangle.y, 
+									   offset + (int)(rectangle.width*(1f/3f)) + rectangle.x, rectangle.height + rectangle.y });
 	}
 	
 	private void drawRightPointingTriangle(Graphics graphics, boolean leftSide){
@@ -60,10 +57,10 @@ public class YAWLTransitionFigure extends TransitionFigure {
 		Rectangle rectangle = getClientArea();
 
 		if(!leftSide){
-			offset = (int)(rectangle.width * 0.5);
+			offset = (int)((float)rectangle.width * (2f/3f));
 		}
 		graphics.drawPolygon(new int[]{offset + 0 + rectangle.x, rectangle.height + rectangle.y, 
-							 		   offset + (int)(rectangle.width*0.5) + rectangle.x, (int)(rectangle.height * 0.5) + rectangle.y, 
+							 		   offset + (int)(rectangle.width*(1f/3f)) + rectangle.x, (int)(rectangle.height * 0.5) + rectangle.y, 
 							 		   offset + 0 + rectangle.x, rectangle.y + 0});
 	}
 	
@@ -72,11 +69,11 @@ public class YAWLTransitionFigure extends TransitionFigure {
 		Rectangle rectangle = getClientArea();
 
 		if(!leftSide){
-			offset = (int)(rectangle.width * 0.5);
+			offset = (int)((float)rectangle.width * (2f/3f));
 		}
-		int xOffset = (int)(rectangle.width * 0.25);
+		int xOffset = (int)((float)rectangle.width * (1f/6f));
 		graphics.drawPolygon(new int[]{xOffset + offset + rectangle.x, 0 + rectangle.y,
-										offset + (int)(rectangle.width*0.5) + rectangle.x, (int)(rectangle.height*0.5) + rectangle.y,
+										offset + (int)(rectangle.width*(1f/3f)) + rectangle.x, (int)(rectangle.height*0.5) + rectangle.y,
 										xOffset + offset + rectangle.x, rectangle.height + rectangle.y, 
 										offset + rectangle.x, (int)(rectangle.height*0.5) + rectangle.y});
 	}
@@ -88,32 +85,42 @@ public class YAWLTransitionFigure extends TransitionFigure {
 		graphics.pushState();
 		Display display = Display.getCurrent();
 		Rectangle rectangle = this.getClientArea();
-
 		Color color = display.getSystemColor(SWT.COLOR_GRAY);
 		graphics.setLineWidth(1);
-		graphics.drawLine(rectangle.width/2 + rectangle.x, rectangle.height + rectangle.y, rectangle.width/2 + rectangle.x, rectangle.height);
 		graphics.setBackgroundColor(color);
-		switch(join){
+		if(join != null){
+			switch(join){
+				case AND:
+					drawRightPointingTriangle(graphics, true);
+					break;
+				case OR:
+					drawDiamond(graphics, true);
+					break;
+				case XOR:
+					drawLeftPointingTriangle(graphics, true);
+					break;
+				default:
+				break;
+			}
+			graphics.drawLine((int)(rectangle.width*(1f/3f)) + rectangle.x, 0 + rectangle.y, 
+					(int)(rectangle.width*(1f/3f)) + rectangle.x, rectangle.height + rectangle.y);
+		}
+		if(split != null){
+			switch(split){
 			case AND:
-				drawRightPointingTriangle(graphics, true);
+				drawRightPointingTriangle(graphics, false);
 				break;
 			case OR:
-				drawDiamond(graphics, true);
+				drawDiamond(graphics, false);
 				break;
 			case XOR:
-				drawLeftPointingTriangle(graphics, true);
+				drawLeftPointingTriangle(graphics, false);
 				break;
-		}
-		switch(split){
-		case AND:
-			drawLeftPointingTriangle(graphics, false);
-			break;
-		case OR:
-			drawDiamond(graphics, false);
-			break;
-		case XOR:
-			drawRightPointingTriangle(graphics, false);
-			break;
+			default:
+				break;
+			}
+			graphics.drawLine((int)(rectangle.width*(2f/3f)) + rectangle.x, rectangle.y, 
+					(int)(rectangle.width*(2f/3f)) + rectangle.x, rectangle.height + rectangle.y);
 		}
 		graphics.popState();
 	}
