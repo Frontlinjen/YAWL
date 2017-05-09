@@ -156,10 +156,14 @@ public class EnabledTransitionImpl extends ObjectAnnotationImpl implements Enabl
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated NOT
+	 * Author: Thomas Bech Madsen s154174
 	 */
 	public Transition getTransition() {
-		// TODO: Verify
-		return (Transition) resolved;
+		Object o = getObject();
+		if(o instanceof Transition){
+			return (Transition) o;
+		}
+		return null;
 	}
 
 	/**
