@@ -53,6 +53,12 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 		this.getNetAnnotations().getNetAnnotations().add(initAnnon);
 		this.getNetAnnotations().setCurrent(initAnnon);
 	}
+	
+	/**
+	 * 
+	 * @author Thomas + Mikkel
+	 */
+	
 	public NetAnnotation computeAnnotation(NetMarking nm){ //TODO DETTE KODE ER UKORREKT 
 		FlatAccess flatAccess = getFlatAccess();
 		NetAnnotation anno = NetannotationsFactory.eINSTANCE.createNetAnnotation();

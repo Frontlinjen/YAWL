@@ -25,6 +25,10 @@ public class SelectArcHandler implements IActionHandler{
 		return false;
 	}
 	
+	/**
+	 * @author Thomas + Mikkel
+	 */
+	
 	@Override
 	public boolean mousePressed(MouseEvent arg0, ObjectAnnotation annotation) {
 		if(annotation instanceof SelectedArc){
@@ -37,7 +41,6 @@ public class SelectArcHandler implements IActionHandler{
 				if(sourceMarking != null && sourceMarking.getValue() > 0){
 					Transition transition = (Transition) ((yawlannotations.EnabledTransition) targetTransition).getTransition();
 					TType type = YAWLFunctions.getJoinType(transition);
-					//if(!selectedArc.isSelected()){
 					if(type.equals(TType.XOR)){
 						for(SelectedArc s_arc: targetTransition.getInArcs()){
 							s_arc.setSelected(false);
@@ -46,8 +49,6 @@ public class SelectArcHandler implements IActionHandler{
 						sim.update();
 						return true;
 					} 
-					//}
-					//if(selectedArc.isSelected()){
 						if(type.equals(TType.OR)){
 							selectedArc.setSelected(!selectedArc.isSelected());
 							boolean notEmpty = false;
@@ -68,7 +69,6 @@ public class SelectArcHandler implements IActionHandler{
 							sim.update();
 							return true;
 						}
-					//}
 					
 				}else if(sourceTransition != null){	
 					Transition transition = (Transition) ((yawlannotations.EnabledTransition) sourceTransition).getTransition();
