@@ -24,6 +24,7 @@
     <eLiterals name="OR" value="2"/>
     <eLiterals name="AND" value="4"/>
     <eLiterals name="XOR" value="6"/>
+    <eLiterals name="NORMAL" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Arc" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Arc">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arcType" eType="#//ArcType"
@@ -34,7 +35,8 @@
     <eLiterals name="RESET" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TransitionType" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Attribute">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="#//TType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="#//TType"
+        defaultValueLiteral="NORMAL"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ArcType" eSuperTypes="../../org.pnml.tools.epnk/model/PNMLCoreModel.ecore#//Attribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="#//AType"/>

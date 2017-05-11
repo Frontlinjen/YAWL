@@ -23,6 +23,7 @@ import org.pnml.tools.epnk.pnmlcoremodel.Attribute;
 public interface TransitionType extends Attribute {
 	/**
 	 * Returns the value of the '<em><b>Text</b></em>' attribute.
+	 * The default value is <code>"NORMAL"</code>.
 	 * The literals are from the enumeration {@link dk.dtu.compute.mbse.yawl.TType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -34,7 +35,7 @@ public interface TransitionType extends Attribute {
 	 * @see dk.dtu.compute.mbse.yawl.TType
 	 * @see #setText(TType)
 	 * @see dk.dtu.compute.mbse.yawl.YawlPackage#getTransitionType_Text()
-	 * @model
+	 * @model default="NORMAL"
 	 * @generated
 	 */
 	TType getText();

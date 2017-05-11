@@ -46,7 +46,15 @@ public enum TType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	XOR(6, "XOR", "XOR");
+	XOR(6, "XOR", "XOR"), /**
+	 * The '<em><b>NORMAL</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #NORMAL_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	NORMAL(3, "NORMAL", "NORMAL");
 
 	/**
 	 * The '<em><b>OR</b></em>' literal value.
@@ -94,6 +102,21 @@ public enum TType implements Enumerator {
 	public static final int XOR_VALUE = 6;
 
 	/**
+	 * The '<em><b>NORMAL</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>NORMAL</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #NORMAL
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NORMAL_VALUE = 3;
+
+	/**
 	 * An array of all the '<em><b>TType</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -104,6 +127,7 @@ public enum TType implements Enumerator {
 			OR,
 			AND,
 			XOR,
+			NORMAL,
 		};
 
 	/**
@@ -163,6 +187,7 @@ public enum TType implements Enumerator {
 			case OR_VALUE: return OR;
 			case AND_VALUE: return AND;
 			case XOR_VALUE: return XOR;
+			case NORMAL_VALUE: return NORMAL;
 		}
 		return null;
 	}
