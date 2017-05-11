@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,7 +60,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	 * @author Thomas + Mikkel
 	 */
 	
-	public NetAnnotation computeAnnotation(NetMarking nm){ //TODO DETTE KODE ER UKORREKT 
+	public NetAnnotation computeAnnotation(NetMarking nm){
 		FlatAccess flatAccess = getFlatAccess();
 		NetAnnotation anno = NetannotationsFactory.eINSTANCE.createNetAnnotation();
 		anno.setNet(getPetrinet());
@@ -79,7 +80,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 			}
 		}
 		
-		Set<Transition> enabled = new HashSet<Transition>();
+		Set<Object> enabled = new HashSet<Object>();
 		//TODO Transition skal laves om til vores egen
 		for(org.pnml.tools.epnk.pnmlcoremodel.Transition t : flatAccess.getTransitions()){
 			if(t instanceof Transition){
@@ -164,19 +165,75 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 						}
 					}
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.OR)){
+						Set<Object> added = new HashSet<Object>();
+						Set<Object> backwards = new HashSet<Object>();
 						for(Object in : flatAccess.getIn(t)){
 							if(!YAWLFunctions.isResetArc((Arc) in)){
 								Marking sourceMark = p2mAnno.get(((Arc) in).getSource());
-								if(sourceMark != null){
-									if(in instanceof Arc){
-										SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
-										arcAnno.setObject(((Arc) in));
-										arcAnno.setSourceMarking(sourceMark);
-										arcAnno.setTargetTransition(transAnno);
-										arcAnno.setSelected(true);
-										anno.getObjectAnnotations().add(arcAnno);
+								if(in instanceof Arc){	
+									if(sourceMark != null){
+											SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
+											arcAnno.setObject(((Arc) in));
+											arcAnno.setSourceMarking(sourceMark);
+											arcAnno.setTargetTransition(transAnno);
+											arcAnno.setSelected(true);
+											anno.getObjectAnnotations().add(arcAnno);
+									}
+									else{
+										added.add((Arc) in);
 									}
 								}
+							}
+						}
+						Iterator it = added.iterator();
+						while(!added.isEmpty() && it.hasNext()){
+							Object o = added.iterator().next();
+							added.remove(o);
+							if(!backwards.contains(o)){
+								backwards.add(o);
+								
+								if(o instanceof Place){
+									Marking mark = p2mAnno.get(o);
+									if(mark == null){
+										added.add(((Place) o).getIn());
+									}
+								} else
+								if(o instanceof Transition){
+									if(enabled.contains(o)){
+										added.add(((Transition) o).getIn());
+									}
+								} else
+								if(o instanceof Arc){
+									added.add(((Arc) o).getSource());
+								}
+							}
+						}
+						enabled.retainAll(backwards);
+						added = enabled;
+						Set<Object> forward = new HashSet<Object>();
+						Iterator ite = added.iterator();
+						while(!added.isEmpty() && ite.hasNext()){
+							Object o = added.iterator().next();
+							added.remove(o);
+							if(!forward.contains(o)){
+								forward.add(o);
+								
+								if(o instanceof Transition){
+									added.add(((Transition) o).getOut().retainAll(backwards));
+								}
+								if(o instanceof Place){
+									added.add(((Place) o).getOut().retainAll(backwards));
+								}
+								if(o instanceof Arc){
+									added.add(((Arc) o).getTarget());
+								}
+							}
+						}
+						for(Object o : forward){
+							if(o.equals(enabled)){
+								forward.remove(o);
+							}else{
+								YawlannotationsFactory.eINSTANCE.createMarking();
 							}
 						}
 					}
@@ -228,7 +285,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	
 	public boolean enabled(FlatAccess fa, NetMarking nm, Transition t){
 		TType joinType = YAWLFunctions.getJoinType(t);
-		if(joinType.equals(TType.AND)||joinType.equals(TType.OR)){
+		if(joinType.equals(TType.AND)/*||joinType.equals(TType.OR)*/){
 			for(Object in : fa.getIn(t)){
 				if(in instanceof Arc) {
 					Arc arc = (Arc) in;
