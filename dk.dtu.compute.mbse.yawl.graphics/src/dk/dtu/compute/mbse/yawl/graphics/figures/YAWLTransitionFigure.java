@@ -102,25 +102,29 @@ public class YAWLTransitionFigure extends TransitionFigure {
 				default:
 				break;
 			}
-			graphics.drawLine((int)(rectangle.width*(1f/3f)) + rectangle.x, 0 + rectangle.y, 
-					(int)(rectangle.width*(1f/3f)) + rectangle.x, rectangle.height + rectangle.y);
+			if(!join.equals(TType.NORMAL)){
+				graphics.drawLine((int)(rectangle.width*(1f/3f)) + rectangle.x, 0 + rectangle.y, 
+						(int)(rectangle.width*(1f/3f)) + rectangle.x, rectangle.height + rectangle.y);
+			}
 		}
 		if(split != null){
 			switch(split){
 			case AND:
-				drawRightPointingTriangle(graphics, false);
+				drawLeftPointingTriangle(graphics, false);
 				break;
 			case OR:
 				drawDiamond(graphics, false);
 				break;
 			case XOR:
-				drawLeftPointingTriangle(graphics, false);
+				drawRightPointingTriangle(graphics, false);
 				break;
 			default:
 				break;
 			}
-			graphics.drawLine((int)(rectangle.width*(2f/3f)) + rectangle.x, rectangle.y, 
-					(int)(rectangle.width*(2f/3f)) + rectangle.x, rectangle.height + rectangle.y);
+			if(!split.equals(TType.NORMAL)){
+				graphics.drawLine((int)(rectangle.width*(2f/3f)) + rectangle.x, rectangle.y, 
+						(int)(rectangle.width*(2f/3f)) + rectangle.x, rectangle.height + rectangle.y);
+			}
 		}
 		graphics.popState();
 	}

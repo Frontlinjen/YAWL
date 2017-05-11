@@ -135,8 +135,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 							}
 						}
 					}
-					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.AND) ||
-							YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(null)){
+					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.AND)){
 						for(Object in : flatAccess.getIn(t)){
 							if(!YAWLFunctions.isResetArc((Arc) in)){
 								Marking sourceMark = p2mAnno.get(((Arc) in).getSource());
@@ -152,8 +151,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 							}
 						}
 					}
-					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.AND) ||
-							YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(null)){
+					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.AND)){
 						for(Object out : flatAccess.getOut(t)){
 							if(out instanceof Arc){
 								SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
@@ -164,6 +162,33 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 							}
 						}
 					}
+					
+					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.NORMAL)){
+						Object in = flatAccess.getIn(t);
+						if(!YAWLFunctions.isResetArc((Arc) in)){
+							Marking sourceMark = p2mAnno.get(((Arc) in).getSource());
+							if(sourceMark != null){
+								if(in instanceof Arc){
+									SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
+									arcAnno.setObject(((Arc) in));
+									arcAnno.setSourceMarking(sourceMark);
+									arcAnno.setSelected(true);
+									anno.getObjectAnnotations().add(arcAnno);
+								}
+							}
+						}
+					}
+					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.NORMAL)){
+						Object out = flatAccess.getIn(t);
+						if(out instanceof Arc){
+							SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
+							arcAnno.setObject(((Arc) out));
+							arcAnno.setSourceTransition(transAnno);
+							arcAnno.setSelected(true);
+							anno.getObjectAnnotations().add(arcAnno);
+						}
+					}
+					
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.OR)){
 						Set<Object> added = new HashSet<Object>();
 						Set<Object> backwards = new HashSet<Object>();
