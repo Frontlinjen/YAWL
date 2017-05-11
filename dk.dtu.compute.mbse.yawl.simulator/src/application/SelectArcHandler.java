@@ -34,48 +34,72 @@ public class SelectArcHandler implements IActionHandler{
 			Marking sourceMarking = selectedArc.getSourceMarking();
 			
 			if(targetTransition != null || sourceTransition != null){
-				if(!selectedArc.isSelected() &&
-					sourceMarking != null &&
-					sourceMarking.getValue() > 0){
-				Transition transition = (Transition) ((yawlannotations.EnabledTransition) targetTransition).getTransition();
-				if(YAWLFunctions.getJoinType(transition).equals(TType.XOR)){
-					for(SelectedArc s_arc: targetTransition.getInArcs()){
-						s_arc.setSelected(false);
-					}
-					selectedArc.setSelected(true);
-					sim.update();
-					return true;
-				}
+				if(sourceMarking != null && sourceMarking.getValue() > 0){
+					Transition transition = (Transition) ((yawlannotations.EnabledTransition) targetTransition).getTransition();
+					TType type = YAWLFunctions.getJoinType(transition);
+					//if(!selectedArc.isSelected()){
+					if(type.equals(TType.XOR)){
+						for(SelectedArc s_arc: targetTransition.getInArcs()){
+							s_arc.setSelected(false);
+						}
+						selectedArc.setSelected(true);
+						sim.update();
+						return true;
+					} 
+					//}
+					//if(selectedArc.isSelected()){
+						if(type.equals(TType.OR)){
+							selectedArc.setSelected(!selectedArc.isSelected());
+							boolean notEmpty = false;
+							for(SelectedArc s_arc: targetTransition.getInArcs()){
+								if(s_arc.isSelected()){
+									notEmpty = true;
+									break;
+								}
+							}
+							if(!notEmpty){
+								for(SelectedArc s_arc: targetTransition.getInArcs()){
+									if(s_arc != selectedArc){
+										s_arc.setSelected(true);
+										break;
+									}
+								}
+							}
+							sim.update();
+							return true;
+						}
+					//}
+					
 				}else if(sourceTransition != null){	
 					Transition transition = (Transition) ((yawlannotations.EnabledTransition) sourceTransition).getTransition();
-					TType cType = YAWLFunctions.getSplitType(transition);
-					if(cType.equals(TType.XOR)){
+					TType ttype = YAWLFunctions.getSplitType(transition);
+					if(ttype.equals(TType.XOR)){
 						for(SelectedArc s_arc: sourceTransition.getOutArcs()){
 							s_arc.setSelected(false);
 						}
 						selectedArc.setSelected(true);
 						sim.update();
 						return true;
-				}else if(cType.equals(TType.OR)){
-					selectedArc.setSelected(!selectedArc.isSelected());
-					boolean notEmpty = false;
-					for (SelectedArc s_arc: sourceTransition.getOutArcs()){
-						if(s_arc.isSelected()){
-							notEmpty = true;
-							break;
-						}
-					}
-					if(!notEmpty){
+					}else if(ttype.equals(TType.OR)){
+						selectedArc.setSelected(!selectedArc.isSelected());
+						boolean notEmpty = false;
 						for (SelectedArc s_arc: sourceTransition.getOutArcs()){
-							if(s_arc != selectedArc){
-								s_arc.setSelected(true);
+							if(s_arc.isSelected()){
+								notEmpty = true;
 								break;
 							}
 						}
+						if(!notEmpty){
+							for (SelectedArc s_arc: sourceTransition.getOutArcs()){
+								if(s_arc != selectedArc){
+									s_arc.setSelected(true);
+									break;
+								}
+							}
+						}
+						sim.update();
+						return true;
 					}
-					sim.update();
-					return true;
-				}
 					
 				}
 			}

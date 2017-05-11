@@ -166,6 +166,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 										SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
 										arcAnno.setObject(((Arc) in));
 										arcAnno.setSourceMarking(sourceMark);
+										arcAnno.setTargetTransition(transAnno);
 										arcAnno.setSelected(true);
 										anno.getObjectAnnotations().add(arcAnno);
 									}

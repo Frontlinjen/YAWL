@@ -48,7 +48,6 @@ public class EnabledTransitionHandler implements IActionHandler{ //SE TUTORIAL 8
 			Object object = annotation.getObject();
 			if(object instanceof Transition){
 				object = flatNet.resolve((Transition) object);
-			}
 			Transition transition = (Transition) object;
 			NetMarking netMarking = app.computeMarking();
 			if(app.enabled(flatNet, netMarking, transition)){
@@ -60,6 +59,7 @@ public class EnabledTransitionHandler implements IActionHandler{ //SE TUTORIAL 8
 				app.addNetAnnotationAsCurrent(netAnnotation);
 				app.update();
 				return true;
+			}
 			}
 		}
 		return false;
