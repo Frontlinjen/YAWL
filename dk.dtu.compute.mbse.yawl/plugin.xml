@@ -49,20 +49,54 @@
 									name="target">
 								</feature>
 								<feature 
-									name="type">
+									name="arcType">
 								</feature>
 							</event>
 						</target>
 						<![CDATA[
-							( self.source.oclIsKindOf(pnmlcoremodel::PlaceNode) and
+						(( self.source.oclIsKindOf(pnmlcoremodel::PlaceNode) and
  							  self.target.oclIsKindOf(pnmlcoremodel::TransitionNode) )
 							  or
 							( self.source.oclIsKindOf(pnmlcoremodel::TransitionNode) and
- 							  self.target.oclIsKindOf(pnmlcoremodel::PlaceNode)) and
-  							  (self.arcType->size() = 1 and self.arcType.text = AType::NORMAL)
+ 							  self.target.oclIsKindOf(pnmlcoremodel::PlaceNode))) and
+  							  (self.arcType->size() = 1 and self.arcType.text = AType::RESET) <> true
 						]]>
 				</constraint>
-					
+				<constraint
+						id="dk.dtu.compute.mbse.yawl.validation.normal-transition-constraint"
+						lang="OCL"
+						mode="Live"
+						name="single in-out for transitions"
+						severity="ERROR"
+						statusCode="406">
+						<message>
+							A normal contraint can only have one in or out arc.
+						</message>
+						<description>
+							Normal contraints are limited to have a single arc connected to them.
+						</description>
+						<target
+								class="Transition:http://se.compute.dtu.dk/mbse/yawl">
+								<event
+									name="Set">
+								<feature 
+									name="out">
+								</feature>
+								<feature 
+									name="in">
+								</feature>
+								<feature 
+									name="joinType">
+								</feature>
+								<feature 
+									name="splitType">
+								</feature>
+							</event>
+						</target>
+						<![CDATA[
+							((self.joinType.text = TType::NORMAL) and (self._'in'->size() = 1)) and ((self.splitType.text = TType::NORMAL) and (self.out->size() = 1))
+						]]>
+				</constraint>
 				<constraint
 							lang="Java"
 							class="dk.dtu.compute.mbse.yawl.constraints.OneStartAndEnd"
