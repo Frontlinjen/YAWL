@@ -96,13 +96,15 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 										arcAnno.setObject(((Arc) in));
 										arcAnno.setSourceMarking(sourceMark);
 										arcAnno.setTargetTransition(transAnno);
+										
 										if(first){
 											arcAnno.setSelected(true);
 											first = false;
 										} else{
 											arcAnno.setSelected(false);
-										}
+										} 
 										anno.getObjectAnnotations().add(arcAnno);
+										
 									}
 								}
 							}

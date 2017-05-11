@@ -33,7 +33,7 @@ public class SelectArcHandler implements IActionHandler{
 			EnabledTransition sourceTransition = (EnabledTransition) selectedArc.getSourceTransition();
 			Marking sourceMarking = selectedArc.getSourceMarking();
 			
-			if(targetTransition != null){
+			if(targetTransition != null || sourceTransition != null){
 				if(!selectedArc.isSelected() &&
 					sourceMarking != null &&
 					sourceMarking.getValue() > 0){
@@ -46,7 +46,7 @@ public class SelectArcHandler implements IActionHandler{
 					sim.update();
 					return true;
 				}
-				}else if(sourceTransition != null){
+				}else if(sourceTransition != null){	
 					Transition transition = (Transition) ((yawlannotations.EnabledTransition) sourceTransition).getTransition();
 					TType cType = YAWLFunctions.getSplitType(transition);
 					if(cType.equals(TType.XOR)){
