@@ -164,7 +164,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					}
 					
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.NORMAL)){
-						Object in = flatAccess.getIn(t);
+						Object in = flatAccess.getIn(t).get(0);
 						if(!YAWLFunctions.isResetArc((Arc) in)){
 							Marking sourceMark = p2mAnno.get(((Arc) in).getSource());
 							if(sourceMark != null){
@@ -179,7 +179,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 						}
 					}
 					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.NORMAL)){
-						Object out = flatAccess.getIn(t);
+						Object out = flatAccess.getIn(t).get(0);
 						if(out instanceof Arc){
 							SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
 							arcAnno.setObject(((Arc) out));
@@ -310,7 +310,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	
 	public boolean enabled(FlatAccess fa, NetMarking nm, Transition t){
 		TType joinType = YAWLFunctions.getJoinType(t);
-		if(joinType.equals(TType.AND)){
+		if(joinType.equals(TType.AND) || joinType.equals(TType.NORMAL)){
 			for(Object in : fa.getIn(t)){
 				if(in instanceof Arc) {
 					Arc arc = (Arc) in;
@@ -379,7 +379,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 				}
 			}
 		}
-		else if(joinType.equals(TType.AND)){
+		else if(joinType.equals(TType.AND) || joinType.equals(TType.NORMAL)){
 			for(Object in : fa.getIn(t)){
 				if(in instanceof Arc){
 					Arc inArc = (Arc) in;
@@ -426,7 +426,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 			}
 		}
 		//Add tokens to target
-		if(splitType.equals(TType.AND)){
+		if(splitType.equals(TType.AND) || splitType.equals(TType.NORMAL)){
 			for(Object out : fa.getOut(t)){
 				if(out instanceof Arc){
 					Object target = ((Arc)out).getTarget();
