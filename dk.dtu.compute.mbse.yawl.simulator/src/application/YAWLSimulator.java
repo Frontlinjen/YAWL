@@ -285,7 +285,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	
 	public boolean enabled(FlatAccess fa, NetMarking nm, Transition t){
 		TType joinType = YAWLFunctions.getJoinType(t);
-		if(joinType.equals(TType.AND)/*||joinType.equals(TType.OR)*/){
+		if(joinType.equals(TType.AND)){
 			for(Object in : fa.getIn(t)){
 				if(in instanceof Arc) {
 					Arc arc = (Arc) in;
