@@ -94,7 +94,8 @@
 							</event>
 						</target>
 						<![CDATA[
-							((self.joinType.text = TType::NORMAL) and (self._'in'->size() = 1)) and ((self.splitType.text = TType::NORMAL) and (self.out->size() = 1))
+							((self.joinType.text <> TType::NORMAL) or (self._'in'->size() = 1)) 
+								and ((self.splitType.text <> TType::NORMAL) or (self.out->size() = 1))
 						]]>
 				</constraint>
 				<constraint
