@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.EList;
 import org.pnml.tools.epnk.annotations.netannotations.NetAnnotation;
 import org.pnml.tools.epnk.annotations.netannotations.NetannotationsFactory;
 import org.pnml.tools.epnk.annotations.netannotations.ObjectAnnotation;
@@ -31,6 +33,7 @@ import yawlannotations.EnabledTransition;
 import yawlannotations.Marking;
 import yawlannotations.SelectedArc;
 import yawlannotations.YawlannotationsFactory;
+import yawlannotations.impl.BacktrackAnnotationImp;
 
 public class YAWLSimulator extends ApplicationWithUIManager{
 
@@ -57,7 +60,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	
 	/**
 	 * 
-	 * @author Thomas + Mikkel
+	 * @author Thomas + Mikkel + Sebastian
 	 */
 	
 	public NetAnnotation computeAnnotation(NetMarking nm){
@@ -80,17 +83,14 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 			}
 		}
 		
-		Set<Object> enabled = new HashSet<Object>();
 		//TODO Transition skal laves om til vores egen
 		for(org.pnml.tools.epnk.pnmlcoremodel.Transition t : flatAccess.getTransitions()){
 			if(t instanceof Transition){
 				if(enabled(flatAccess, nm, (Transition) t)){
-					enabled.add((Transition) t);
 					
 					EnabledTransition transAnno = YawlannotationsFactory.eINSTANCE.createEnabledTransition();
 					transAnno.setObject(t);
 					anno.getObjectAnnotations().add(transAnno);
-					
 					//TODO also annotate reference transitions referring to this transition
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.XOR)){
 						boolean first = true;
@@ -144,6 +144,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 										SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
 										arcAnno.setObject(((Arc) in));
 										arcAnno.setSourceMarking(sourceMark);
+										arcAnno.setTargetTransition(transAnno);
 										arcAnno.setSelected(true);
 										anno.getObjectAnnotations().add(arcAnno);
 									}
@@ -172,6 +173,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 									SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
 									arcAnno.setObject(((Arc) in));
 									arcAnno.setSourceMarking(sourceMark);
+									arcAnno.setTargetTransition(transAnno);
 									arcAnno.setSelected(true);
 									anno.getObjectAnnotations().add(arcAnno);
 								}
@@ -179,7 +181,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 						}
 					}
 					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.NORMAL)){
-						Object out = flatAccess.getIn(t).get(0);
+						Object out = flatAccess.getOut(t).get(0);
 						if(out instanceof Arc){
 							SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
 							arcAnno.setObject(((Arc) out));
@@ -190,8 +192,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					}
 					
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.OR)){
-						//Set<Object> added = new HashSet<Object>();
-						//Set<Object> backwards = new HashSet<Object>();
+						annotateBacktracking((dk.dtu.compute.mbse.yawl.Transition)t, nm, anno);
 						for(Object in : flatAccess.getIn(t)){
 							if(!YAWLFunctions.isResetArc((Arc) in)){
 								Marking sourceMark = p2mAnno.get(((Arc) in).getSource());
@@ -204,65 +205,10 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 											arcAnno.setSelected(true);
 											anno.getObjectAnnotations().add(arcAnno);
 									}
-									//else{
-									//	added.add((Arc) in);
-									//}
 								}
 							}
 						}
-					}/*
-						Iterator it = added.iterator();
-						while(!added.isEmpty() && it.hasNext()){
-							Object o = added.iterator().next();
-							added.remove(o);
-							if(!backwards.contains(o)){
-								backwards.add(o);
-								
-								if(o instanceof Place){
-									Marking mark = p2mAnno.get(o);
-									if(mark == null){
-										added.add(((Place) o).getIn());
-									}
-								} else
-								if(o instanceof Transition){
-									if(enabled.contains(o)){
-										added.add(((Transition) o).getIn());
-									}
-								} else
-								if(o instanceof Arc){
-									added.add(((Arc) o).getSource());
-								}
-							}
-						}
-						enabled.retainAll(backwards);
-						added = enabled;
-						Set<Object> forward = new HashSet<Object>();
-						Iterator ite = added.iterator();
-						while(!added.isEmpty() && ite.hasNext()){
-							Object o = added.iterator().next();
-							added.remove(o);
-							if(!forward.contains(o)){
-								forward.add(o);
-								
-								if(o instanceof Transition){
-									added.add(((Transition) o).getOut().retainAll(backwards));
-								}
-								if(o instanceof Place){
-									added.add(((Place) o).getOut().retainAll(backwards));
-								}
-								if(o instanceof Arc){
-									added.add(((Arc) o).getTarget());
-								}
-							}
-						}
-						for(Object o : forward){
-							if(o.equals(enabled)){
-								forward.remove(o);
-							}else{
-								YawlannotationsFactory.eINSTANCE.createMarking();
-							}
-						}
-					}*/
+					}
 					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.OR)){
 						for(Object out : flatAccess.getOut(t)){
 							if(out instanceof Arc){
@@ -276,10 +222,63 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					}
 				}
 			}
-		} 
+		}
 		return anno;
 	}
 	
+	/*
+	 * 
+	 * @author Sebastian
+	 * 
+	 */
+	private boolean visitObject(org.pnml.tools.epnk.pnmlcoremodel.Object o, NetMarking nm, NetAnnotation anno, int depth){
+		++depth; //Keeps track of how "deep" in the net we are
+		boolean shouldAnnotate = false;
+		if(o instanceof Place){
+			Place p = (Place)o;
+			if(nm.GetMarking(p) == 0){
+				for (org.pnml.tools.epnk.pnmlcoremodel.Arc obj : getFlatAccess().getIn(p)) {
+					shouldAnnotate |= visitObject(obj, nm, anno, depth);
+				}
+			}
+			else{
+				shouldAnnotate = depth > 2;	
+			}
+		}else if(o instanceof Transition){
+			Transition t = (Transition)o;
+			if(enabled(getFlatAccess(), nm, (Transition)o)){
+				return true;
+			}
+			else
+			{
+				for (org.pnml.tools.epnk.pnmlcoremodel.Arc obj : getFlatAccess().getIn(t)) {
+					shouldAnnotate |= visitObject(obj, nm, anno, depth);
+				}
+			}
+		}else if(o instanceof Arc){
+			if(!YAWLFunctions.isResetArc((Arc)o)){
+				Arc a = (Arc)o;
+				shouldAnnotate = visitObject(a.getSource(), nm, anno, depth);
+			}
+		}
+		if(shouldAnnotate){
+			BacktrackAnnotationImp ann = new BacktrackAnnotationImp();
+			ann.setObject(o);
+			anno.getObjectAnnotations().add(ann);
+		}
+		return shouldAnnotate;
+	}
+	
+	/*
+	 * 
+	 * @author Sebastian
+	 * 
+	 */
+	private void annotateBacktracking(Transition t, NetMarking nm, NetAnnotation anno){
+		for(org.pnml.tools.epnk.pnmlcoremodel.Arc a : getFlatAccess().getIn(t)){
+			visitObject(a, nm, anno, 0);
+		}
+	}
 	public NetMarking computeInitialMarking(){
 		NetMarking mark = new NetMarking();
 		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : getFlatAccess().getPlaces())
@@ -357,17 +356,15 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	}
 	/**
 	 * 
-	 * @Author Thomas Bech Madsen
+	 * @Author Thomas Bech Madsen + Sebastian
 	 */
-	public NetMarking fireTransition(FlatAccess fa, NetMarking n1, Arc selectedInArc, Transition t, Collection<Arc> selectedOutArcs){
+	public NetMarking fireTransition(FlatAccess fa, NetMarking n1, Collection<Arc> selectedInArc, Transition t, Collection<Arc> selectedOutArcs){
 		TType joinType = YAWLFunctions.getJoinType(t);
 		TType splitType = YAWLFunctions.getSplitType(t);
 		
 		//Remove tokens from source
 		if(joinType.equals(TType.OR)){
-			for(Object in : fa.getIn(t)){
-				if(in instanceof Arc){
-					Arc inArc = (Arc) in;
+			for(Arc inArc : selectedInArc){
 					if(!YAWLFunctions.isResetArc(inArc)){
 						Object source = inArc.getSource();
 						if(source instanceof PlaceNode){
@@ -376,13 +373,11 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 								n1.Decrement((Place) source, 1);
 							}
 						}
-					}
 				}
 			}
 		}
 		else if(joinType.equals(TType.AND) || joinType.equals(TType.NORMAL)){
-			for(Object in : fa.getIn(t)){
-				if(in instanceof Arc){
+			for(Arc in : selectedInArc){
 					Arc inArc = (Arc) in;
 					if(!YAWLFunctions.isResetArc(inArc)){
 						Object source = inArc.getSource();
@@ -390,58 +385,40 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 							source = fa.resolve((PlaceNode) source);
 							if(source instanceof Place){
 								n1.Decrement((Place) source, 1);
+							}	
+					}
+				}
+			}
+		}
+		else if(joinType.equals(TType.XOR) && selectedInArc != null){
+			Arc first = selectedInArc.iterator().next();
+			if(!YAWLFunctions.isResetArc(first)){
+				Node target = first.getTarget();
+				if(target instanceof TransitionNode){
+					Transition transition = (Transition) fa.resolve((TransitionNode) target);
+					if(t == transition){
+						Object source = first.getSource();
+						if(source instanceof PlaceNode){
+							source = fa.resolve((PlaceNode) source);
+							if(source instanceof Place && n1.GetMarking((Place)source) > 0){
+								n1.Decrement((Place) source, 1);
 							}
 						}
 					}
-				}
+				}			
 			}
-		}
-		else if(joinType.equals(TType.XOR) && selectedInArc != null && !YAWLFunctions.isResetArc(selectedInArc)){
-			Node target = selectedInArc.getTarget();
-			if(target instanceof TransitionNode){
-				Transition transition = (Transition) fa.resolve((TransitionNode) target);
-				if(t == transition){
-					Object source = selectedInArc.getSource();
-					if(source instanceof PlaceNode){
-						source = fa.resolve((PlaceNode) source);
-						if(source instanceof Place && n1.GetMarking((Place)source) > 0){
-							n1.Decrement((Place) source, 1);
-						}
-					}
-				}
-			}
+			
 		}
 		
 		//Add tokens to target
-		if(splitType.equals(TType.AND) || splitType.equals(TType.NORMAL)){
-			for(Object out : fa.getOut(t)){
-				if(out instanceof Arc){
+			for(Arc out : selectedOutArcs){
 					Object target = ((Arc)out).getTarget();
 					if(target instanceof PlaceNode){
 						target = fa.resolve((PlaceNode) target);
 						if(target instanceof Place){
 							n1.Increment((Place) target, 1);
 						}
-					}
 				}
-			}
-		}
-		else if((splitType.equals(TType.OR) || splitType.equals(TType.XOR)) && selectedOutArcs != null){
-			for(Arc outArc : selectedOutArcs){
-				Node source = ((org.pnml.tools.epnk.pnmlcoremodel.Arc) outArc).getSource();
-				if(source instanceof TransitionNode){
-					source = fa.resolve((TransitionNode)source);
-				}
-				if(t == source){
-					Object target = outArc.getTarget();
-					if(target instanceof PlaceNode){
-						target = fa.resolve((PlaceNode) target);
-						if(target instanceof Place){
-							n1.Increment((Place) target, 1);
-						}
-					}
-				}
-			}
 		}
 		//Handle resetArcs
 		for(Object in : fa.getIn(t)){

@@ -26,7 +26,7 @@ import yawlannotations.YawlannotationsFactory;
 import yawlannotations.YawlannotationsPackage;
 /**
  * 
- * @author Thomas Bech Madsen
+ * @author Thomas Bech Madsen + Sebastian
  *
  */
 public class EnabledTransitionHandler implements IActionHandler{ //SE TUTORIAL 8C
@@ -75,17 +75,18 @@ public class EnabledTransitionHandler implements IActionHandler{ //SE TUTORIAL 8
 		return false;
 	}
 	
-	private Arc getSelectedInArcs(EnabledTransition enabledTransition){
+	private Collection<Arc> getSelectedInArcs(EnabledTransition enabledTransition){
 		EnabledTransition resolved = enabledTransition.getResolved();
+		Collection<Arc> arcs = new HashSet<Arc>();
 		if(resolved == null){
 			resolved = enabledTransition;
 		}
 		for(SelectedArc selectedArc : resolved.getInArcs()){
 			if(selectedArc.isSelected()){
-				return (Arc) selectedArc.getObject();
+				arcs.add((Arc)selectedArc.getObject());
 			}
 		}
-		return null;
+		return arcs;
 	}
 	
 	private Collection<Arc> getSelectedOutArcs(EnabledTransition enabledTransition){
