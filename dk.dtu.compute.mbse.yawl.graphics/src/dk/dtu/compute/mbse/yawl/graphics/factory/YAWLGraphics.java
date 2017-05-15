@@ -67,6 +67,10 @@ public class YAWLGraphics extends GraphicalExtension {
 		return null;
 	}
 
+	/**
+	 * @author Mikkel
+	 */
+	
 	@Override
 	public IUpdateableFigure createTransitionFigure(Transition transition) {
 		if(transition instanceof dk.dtu.compute.mbse.yawl.Transition)
