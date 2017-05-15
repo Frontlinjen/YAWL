@@ -15,6 +15,7 @@ import org.pnml.tools.epnk.pnmlcoremodel.TransitionNode;
 import dk.dtu.compute.mbse.yawl.Arc;
 import yawlannotations.EnabledTransition;
 import yawlannotations.SelectedArc;
+import yawlannotations.impl.BacktrackAnnotationImp;
 
 public class YAWLAnnotationsPresentationHandler implements IPresentationHandler{
 
@@ -47,6 +48,15 @@ public class YAWLAnnotationsPresentationHandler implements IPresentationHandler{
 					}
 					return overlay;
 				}
+			}
+		} else if(annotation instanceof BacktrackAnnotationImp){
+			if(editPart instanceof GraphicalEditPart){
+				GraphicalEditPart graphicalEditPart = (GraphicalEditPart) editPart;
+				java.lang.Object modelObject = graphicalEditPart.resolveSemanticElement();
+					RectangleOverlay overlay = new RectangleOverlay(graphicalEditPart);
+					overlay.setForegroundColor(org.eclipse.draw2d.ColorConstants.red);
+					overlay.setBackgroundColor(org.eclipse.draw2d.ColorConstants.red);
+					return overlay;
 			}
 		}
 		return null;
