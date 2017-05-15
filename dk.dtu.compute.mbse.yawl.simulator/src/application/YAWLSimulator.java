@@ -190,8 +190,8 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					}
 					
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.OR)){
-						Set<Object> added = new HashSet<Object>();
-						Set<Object> backwards = new HashSet<Object>();
+						//Set<Object> added = new HashSet<Object>();
+						//Set<Object> backwards = new HashSet<Object>();
 						for(Object in : flatAccess.getIn(t)){
 							if(!YAWLFunctions.isResetArc((Arc) in)){
 								Marking sourceMark = p2mAnno.get(((Arc) in).getSource());
@@ -204,12 +204,13 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 											arcAnno.setSelected(true);
 											anno.getObjectAnnotations().add(arcAnno);
 									}
-									else{
-										added.add((Arc) in);
-									}
+									//else{
+									//	added.add((Arc) in);
+									//}
 								}
 							}
 						}
+					}/*
 						Iterator it = added.iterator();
 						while(!added.isEmpty() && it.hasNext()){
 							Object o = added.iterator().next();
@@ -261,7 +262,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 								YawlannotationsFactory.eINSTANCE.createMarking();
 							}
 						}
-					}
+					}*/
 					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.OR)){
 						for(Object out : flatAccess.getOut(t)){
 							if(out instanceof Arc){
@@ -275,7 +276,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					}
 				}
 			}
-		}
+		} 
 		return anno;
 	}
 	
@@ -410,21 +411,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 				}
 			}
 		}
-		//Handle resetArcs
-		for(Object in : fa.getIn(t)){
-			if(in instanceof Arc){
-				Arc inArc = (Arc) in;
-				if(YAWLFunctions.isResetArc(inArc)){
-					Object source = inArc.getSource();
-					if(source instanceof PlaceNode){
-						source = fa.resolve((PlaceNode) source);
-						if(source instanceof Place){
-							n1.SetMarking((Place)source, 0);
-						}
-					}
-				}
-			}
-		}
+		
 		//Add tokens to target
 		if(splitType.equals(TType.AND) || splitType.equals(TType.NORMAL)){
 			for(Object out : fa.getOut(t)){
@@ -451,6 +438,21 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 						target = fa.resolve((PlaceNode) target);
 						if(target instanceof Place){
 							n1.Increment((Place) target, 1);
+						}
+					}
+				}
+			}
+		}
+		//Handle resetArcs
+		for(Object in : fa.getIn(t)){
+			if(in instanceof Arc){
+				Arc inArc = (Arc) in;
+				if(YAWLFunctions.isResetArc(inArc)){
+					Object source = inArc.getSource();
+					if(source instanceof PlaceNode){
+						source = fa.resolve((PlaceNode) source);
+						if(source instanceof Place){
+							n1.SetMarking((Place)source, 0);
 						}
 					}
 				}

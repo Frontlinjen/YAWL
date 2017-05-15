@@ -49,26 +49,26 @@ public class SelectArcHandler implements IActionHandler{
 						sim.update();
 						return true;
 					} 
-						if(type.equals(TType.OR)){
-							selectedArc.setSelected(!selectedArc.isSelected());
-							boolean notEmpty = false;
+					if(type.equals(TType.OR)){
+						selectedArc.setSelected(!selectedArc.isSelected());
+						boolean notEmpty = false;
+						for(SelectedArc s_arc: targetTransition.getInArcs()){
+							if(s_arc.isSelected()){
+								notEmpty = true;
+								break;
+							}
+						}
+						if(!notEmpty){
 							for(SelectedArc s_arc: targetTransition.getInArcs()){
-								if(s_arc.isSelected()){
-									notEmpty = true;
+								if(s_arc != selectedArc){
+									s_arc.setSelected(true);
 									break;
 								}
 							}
-							if(!notEmpty){
-								for(SelectedArc s_arc: targetTransition.getInArcs()){
-									if(s_arc != selectedArc){
-										s_arc.setSelected(true);
-										break;
-									}
-								}
-							}
-							sim.update();
-							return true;
 						}
+						sim.update();
+						return true;
+					}
 					
 				}else if(sourceTransition != null){	
 					Transition transition = (Transition) ((yawlannotations.EnabledTransition) sourceTransition).getTransition();
