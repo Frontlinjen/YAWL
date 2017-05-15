@@ -26,7 +26,7 @@ public class SelectArcHandler implements IActionHandler{
 	}
 	
 	/**
-	 * @author Thomas + Mikkel
+	 * @author Thomas + Mikkel + Sebastian
 	 */
 	
 	@Override
@@ -58,6 +58,7 @@ public class SelectArcHandler implements IActionHandler{
 								break;
 							}
 						}
+						//Checks if none are selected
 						if(!notEmpty){
 							for(SelectedArc s_arc: targetTransition.getInArcs()){
 								if(s_arc != selectedArc){
