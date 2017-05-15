@@ -165,29 +165,37 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					}
 					
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.NORMAL)){
-						Object in = flatAccess.getIn(t).get(0);
-						if(!YAWLFunctions.isResetArc((Arc) in)){
-							Marking sourceMark = p2mAnno.get(((Arc) in).getSource());
-							if(sourceMark != null){
-								if(in instanceof Arc){
-									SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
-									arcAnno.setObject(((Arc) in));
-									arcAnno.setSourceMarking(sourceMark);
-									arcAnno.setTargetTransition(transAnno);
-									arcAnno.setSelected(true);
-									anno.getObjectAnnotations().add(arcAnno);
+						List<org.pnml.tools.epnk.pnmlcoremodel.Arc> inArcs = flatAccess.getIn(t);
+						if(inArcs.size() > 0)
+						{
+							Arc in = (Arc)inArcs.get(0);
+							if(!YAWLFunctions.isResetArc((Arc) in)){
+								Marking sourceMark = p2mAnno.get(((Arc) in).getSource());
+								if(sourceMark != null){
+									if(in instanceof Arc){
+										SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
+										arcAnno.setObject(((Arc) in));
+										arcAnno.setSourceMarking(sourceMark);
+										arcAnno.setTargetTransition(transAnno);
+										arcAnno.setSelected(true);
+										anno.getObjectAnnotations().add(arcAnno);
+									}
 								}
 							}
 						}
 					}
 					if(YAWLFunctions.getSplitType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.NORMAL)){
-						Object out = flatAccess.getOut(t).get(0);
-						if(out instanceof Arc){
-							SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
-							arcAnno.setObject(((Arc) out));
-							arcAnno.setSourceTransition(transAnno);
-							arcAnno.setSelected(true);
-							anno.getObjectAnnotations().add(arcAnno);
+						List<org.pnml.tools.epnk.pnmlcoremodel.Arc> outArcs = flatAccess.getOut(t);
+						if(outArcs.size() > 0)
+						{
+							Arc out = (Arc)outArcs.get(0);						
+								if(out instanceof Arc){
+									SelectedArc arcAnno = YawlannotationsFactory.eINSTANCE.createSelectedArc();
+									arcAnno.setObject(((Arc) out));
+									arcAnno.setSourceTransition(transAnno);
+									arcAnno.setSelected(true);
+									anno.getObjectAnnotations().add(arcAnno);
+								}
 						}
 					}
 					
