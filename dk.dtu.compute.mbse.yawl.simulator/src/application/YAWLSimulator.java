@@ -239,14 +239,22 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	 * @author Sebastian
 	 * 
 	 */
-	private boolean visitObject(org.pnml.tools.epnk.pnmlcoremodel.Object o, NetMarking nm, NetAnnotation anno, int depth){
+	private boolean visitObject(org.pnml.tools.epnk.pnmlcoremodel.Object o, NetMarking nm, NetAnnotation anno, int depth, Set<org.pnml.tools.epnk.pnmlcoremodel.Object> visited){
+		if(visited.contains(o))
+		{
+			return false;
+		}
+		else
+		{
+			visited.add(o);
+		}
 		++depth; //Keeps track of how "deep" in the net we are
 		boolean shouldAnnotate = false;
 		if(o instanceof Place){
 			Place p = (Place)o;
 			if(nm.GetMarking(p) == 0){
 				for (org.pnml.tools.epnk.pnmlcoremodel.Arc obj : getFlatAccess().getIn(p)) {
-					shouldAnnotate |= visitObject(obj, nm, anno, depth);
+					shouldAnnotate |= visitObject(obj, nm, anno, depth, visited);
 				}
 			}
 			else{
@@ -260,13 +268,13 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 			else
 			{
 				for (org.pnml.tools.epnk.pnmlcoremodel.Arc obj : getFlatAccess().getIn(t)) {
-					shouldAnnotate |= visitObject(obj, nm, anno, depth);
+					shouldAnnotate |= visitObject(obj, nm, anno, depth, visited);
 				}
 			}
 		}else if(o instanceof Arc){
 			if(!YAWLFunctions.isResetArc((Arc)o)){
 				Arc a = (Arc)o;
-				shouldAnnotate = visitObject(a.getSource(), nm, anno, depth);
+				shouldAnnotate = visitObject(a.getSource(), nm, anno, depth, visited);
 			}
 		}
 		if(shouldAnnotate){
@@ -283,8 +291,10 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 	 * 
 	 */
 	private void annotateBacktracking(Transition t, NetMarking nm, NetAnnotation anno){
+		Set<org.pnml.tools.epnk.pnmlcoremodel.Object> set = new HashSet<org.pnml.tools.epnk.pnmlcoremodel.Object>();
+		set.add(t);
 		for(org.pnml.tools.epnk.pnmlcoremodel.Arc a : getFlatAccess().getIn(t)){
-			visitObject(a, nm, anno, 0);
+			visitObject(a, nm, anno, 0, set);
 		}
 	}
 	public NetMarking computeInitialMarking(){

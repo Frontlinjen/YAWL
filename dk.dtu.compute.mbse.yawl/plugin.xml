@@ -63,6 +63,35 @@
 						]]>
 				</constraint>
 				<constraint
+						id="dk.dtu.compute.mbse.yawl.validation.all-transitions-set"
+						lang="OCL"
+						mode="Live"
+						name="all-transitions-set"
+						severity="ERROR"
+						statusCode="499">
+						<message>
+							A transition must have a type
+						</message>
+						<description>
+							A transition must have a type(XOR, OR, AND, NORMAL)
+						</description>
+						<target
+								class="Transition:http://se.compute.dtu.dk/mbse/yawl">
+								<event
+									name="Set">
+								<feature 
+									name="joinType">
+								</feature>
+								<feature 
+									name="splitType">
+								</feature>
+							</event>
+						</target>
+						<![CDATA[
+							(self.joinType->size() > 0 and self.splitType->size() > 0)
+						]]>
+				</constraint>
+				<constraint
 						id="dk.dtu.compute.mbse.yawl.validation.normal-transition-constraint"
 						lang="OCL"
 						mode="Live"
