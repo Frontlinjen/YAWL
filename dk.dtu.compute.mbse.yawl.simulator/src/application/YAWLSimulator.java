@@ -21,6 +21,7 @@ import org.pnml.tools.epnk.pnmlcoremodel.Node;
 import org.pnml.tools.epnk.pnmlcoremodel.PetriNet;
 import org.pnml.tools.epnk.pnmlcoremodel.PlaceNode;
 import org.pnml.tools.epnk.pnmlcoremodel.RefPlace;
+import org.pnml.tools.epnk.pnmlcoremodel.RefTransition;
 import org.pnml.tools.epnk.pnmlcoremodel.TransitionNode;
 
 import dk.dtu.compute.mbse.yawl.Arc;
@@ -99,7 +100,14 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 					
 					EnabledTransition transAnno = YawlannotationsFactory.eINSTANCE.createEnabledTransition();
 					transAnno.setObject(t);
+					transAnno.setResolved(transAnno);
 					anno.getObjectAnnotations().add(transAnno);
+					for(RefTransition refTrans : flatAccess.getRefTransitions(t)){
+						EnabledTransition referenceAnno = YawlannotationsFactory.eINSTANCE.createEnabledTransition();
+						referenceAnno.setObject(refTrans);
+						referenceAnno.setResolved(transAnno);
+						anno.getObjectAnnotations().add(referenceAnno);
+					}
 					//TODO also annotate reference transitions referring to this transition
 					if(YAWLFunctions.getJoinType((dk.dtu.compute.mbse.yawl.Transition)t).equals(TType.XOR)){
 						boolean first = true;
@@ -240,6 +248,7 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 				}
 			}
 		}
+		
 		return anno;
 	}
 	

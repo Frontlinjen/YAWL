@@ -39,6 +39,8 @@ public class SelectArcHandler implements IActionHandler{
 			
 			if(targetTransition != null || sourceTransition != null){
 				if(sourceMarking != null && sourceMarking.getValue() > 0){
+					targetTransition = targetTransition.getResolved();
+
 					Transition transition = (Transition) ((yawlannotations.EnabledTransition) targetTransition).getTransition();
 					TType type = YAWLFunctions.getJoinType(transition);
 					if(type.equals(TType.XOR)){
@@ -72,6 +74,8 @@ public class SelectArcHandler implements IActionHandler{
 					}
 					
 				}else if(sourceTransition != null){	
+					sourceTransition = sourceTransition.getResolved();
+
 					Transition transition = (Transition) ((yawlannotations.EnabledTransition) sourceTransition).getTransition();
 					TType ttype = YAWLFunctions.getSplitType(transition);
 					if(ttype.equals(TType.XOR)){
