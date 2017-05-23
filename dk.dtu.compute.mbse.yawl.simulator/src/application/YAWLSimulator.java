@@ -20,6 +20,7 @@ import org.pnml.tools.epnk.helpers.FlatAccess;
 import org.pnml.tools.epnk.pnmlcoremodel.Node;
 import org.pnml.tools.epnk.pnmlcoremodel.PetriNet;
 import org.pnml.tools.epnk.pnmlcoremodel.PlaceNode;
+import org.pnml.tools.epnk.pnmlcoremodel.RefPlace;
 import org.pnml.tools.epnk.pnmlcoremodel.TransitionNode;
 
 import dk.dtu.compute.mbse.yawl.Arc;
@@ -68,20 +69,28 @@ public class YAWLSimulator extends ApplicationWithUIManager{
 		NetAnnotation anno = NetannotationsFactory.eINSTANCE.createNetAnnotation();
 		anno.setNet(getPetrinet());
 		Map<Object,Marking> p2mAnno = new HashMap<Object,Marking>();
+		Map<PlaceNode, Integer> placesToAnnotate = new HashMap<PlaceNode, Integer>();
 		//TODO Place skal laves om til vores egen
 		for(org.pnml.tools.epnk.pnmlcoremodel.Place place : nm.GetSupport()) {
 			int value = nm.GetMarking(place);
 			if(value > 0){
-				Marking markAnno = YawlannotationsFactory.eINSTANCE.createMarking();
-				markAnno.setValue(value);
-				markAnno.setObject(place);
-				anno.getObjectAnnotations().add(markAnno);
-				p2mAnno.put(place, markAnno);
-				
-				//TODO Also annotate reference places with the current marking of the place.
-				
+				placesToAnnotate.put(place, value);
+				for(RefPlace refP : flatAccess.getRefPlaces(place))
+				{
+					placesToAnnotate.put(refP, value);
+				}
 			}
 		}
+		Iterator itr =  placesToAnnotate.entrySet().iterator();
+		while(itr.hasNext()){
+			Map.Entry<PlaceNode, Integer> entry = (Map.Entry<PlaceNode, Integer>)itr.next();
+			Marking markAnno = YawlannotationsFactory.eINSTANCE.createMarking();
+			markAnno.setValue(entry.getValue());
+			markAnno.setObject(entry.getKey());
+			anno.getObjectAnnotations().add(markAnno);
+			p2mAnno.put(entry.getKey(), markAnno);
+		}
+		
 		
 		//TODO Transition skal laves om til vores egen
 		for(org.pnml.tools.epnk.pnmlcoremodel.Transition t : flatAccess.getTransitions()){
